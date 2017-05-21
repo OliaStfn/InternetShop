@@ -20,5 +20,6 @@ public class EmployeeTest {
         employee.setSurname("gf");
         employee.setPhoneNumber("42");
         System.out.println(employee.toString());
+
     }
 }
