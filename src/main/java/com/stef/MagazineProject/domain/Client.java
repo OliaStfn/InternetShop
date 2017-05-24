@@ -95,6 +95,7 @@ public class Client extends Human implements Identifacator<Integer> {
                 '}';
     }
 
+
     @Override
     public int getId() {
         return id;

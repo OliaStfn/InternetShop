@@ -24,12 +24,12 @@ public class Session {
         login = in.nextLine();
         System.out.println("Enter your password: ");
         password = in.nextLine();
-        for(Client client:clients){
-            if (client.getLogin().equals(login)){
-                if (client.getPassword().equals(password)){
+        for (Client client : clients) {
+            if (client.getLogin().equals(login)) {
+                if (client.getPassword().equals(password)) {
                     human = client;
                     return;
-                }else System.out.println("Incorrect password");
+                } else System.out.println("Incorrect password");
             }
         }
         System.out.println("Account not found");
@@ -52,14 +52,39 @@ public class Session {
         login = in.nextLine();
         System.out.println("Enter your password: ");
         password = in.nextLine();
-        for(Employee employee:employees){
-            if (employee.getLogin().equals(login)){
-                if (employee.getPassword().equals(password)){
+        for (Employee employee : employees) {
+            if (employee.getLogin().equals(login)) {
+                if (employee.getPassword().equals(password)) {
                     human = employee;
                     return;
-                }else System.out.println("Incorrect password");
+                } else System.out.println("Incorrect password");
             }
         }
         System.out.println("Account not found");
+    }
+
+    public static void choice() throws DaoException {
+        Scanner in = new Scanner(System.in);
+        int choice=-1;
+        do {
+            System.out.println("What do you want? Enter your choice: ");
+            System.out.println("1-Register user`s account\n 2-Login as administrator\n " +
+                    "3-Login as user\n 0-Exit");
+            choice=Integer.parseInt(in.next());
+            if(choice==1) {
+                register();
+                break;
+            }else if(choice==2){
+                loginAdmin();
+                break;
+            }else if(choice==3){
+                login();
+                break;
+            }
+        } while (choice!=0);
+    }
+
+    public static Human getHuman() {
+        return human;
     }
 }
