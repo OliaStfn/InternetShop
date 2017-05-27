@@ -1,11 +1,12 @@
 package com.stef.MagazineProject.domain;
 
 import com.stef.MagazineProject.DAO.Identifacator;
+import com.stef.MagazineProject.support.ISort;
 
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
-public class Employee extends Human implements Identifacator<Integer> {
+public class Employee extends Human implements Identifacator<Integer>,ISort {
     private int id;
     private GregorianCalendar date_of_begin;
     private double salary;
@@ -133,5 +134,15 @@ public class Employee extends Human implements Identifacator<Integer> {
 
     public void setBonus() {
         salary += salary * 0.1;
+    }
+
+    @Override
+    public String getWordForSort() {
+        return getSurname()+getName();
+    }
+
+    @Override
+    public double getPriceForSort() {
+        return getSalary();
     }
 }

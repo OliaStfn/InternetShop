@@ -45,7 +45,7 @@ public class Stock {
             warranty =  Integer.parseInt(in.next());
            // goods.add(new Product(name,description, price, vendor, warranty));
             System.out.println("Add another product?");
-            System.out.print("1-YES / 0-NO :");
+            System.out.print("1-YES / 0-NO : ");
             repeat =  Integer.parseInt(in.next());
         } while (repeat != 0);
     }
@@ -57,7 +57,7 @@ public class Stock {
             System.out.println(product.toString());
         }
 
-        System.out.print("Chose your product by ID:");
+        System.out.print("Chose your product by ID: ");
         Scanner in = new Scanner(System.in);
         int inputID = Integer.parseInt(in.next());
         for (int i = 0; i < goods.size(); i++) {
@@ -76,4 +76,13 @@ public class Stock {
             }
         }
         Product.setNextId(oldMaxID + 1);*/
+
+    public static StringBuilder getInformationAboutProducts() {
+        StringBuilder temp = new StringBuilder("");
+        for (Product product: goods){
+            temp.append(product.toString());
+            temp.append("\n");
+        }
+        return temp;
+    }
 }

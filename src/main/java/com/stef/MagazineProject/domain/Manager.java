@@ -1,6 +1,8 @@
 package com.stef.MagazineProject.domain;
 
-public class Manager extends Employee {
+import com.stef.MagazineProject.support.ISort;
+
+public class Manager extends Employee implements ISort {
 
     private String phone;
     private String department;
@@ -50,4 +52,6 @@ public class Manager extends Employee {
                 super.toString() +
                 '}';
     }
+
+
 }

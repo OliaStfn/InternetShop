@@ -1,10 +1,11 @@
 package com.stef.MagazineProject.domain;
 
 import com.stef.MagazineProject.DAO.Identifacator;
+import com.stef.MagazineProject.support.ISort;
 
 import java.util.GregorianCalendar;
 
-public class Client extends Human implements Identifacator<Integer> {
+public class Client extends Human implements Identifacator<Integer>, ISort {
     private FavouriteList list;
     private int id;
     private String phoneNumber;
@@ -99,5 +100,10 @@ public class Client extends Human implements Identifacator<Integer> {
     @Override
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String getWordForSort() {
+        return getSurname() + getName();
     }
 }

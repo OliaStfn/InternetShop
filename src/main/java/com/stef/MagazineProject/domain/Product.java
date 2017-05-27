@@ -1,10 +1,11 @@
 package com.stef.MagazineProject.domain;
 
 import com.stef.MagazineProject.DAO.Identifacator;
+import com.stef.MagazineProject.support.ISort;
 
 import java.util.GregorianCalendar;
 
-public class Product implements Identifacator<Integer> {
+public class Product implements Identifacator<Integer>,ISort {
     private Integer id;
     private String name;
     private double price;
@@ -88,5 +89,15 @@ public class Product implements Identifacator<Integer> {
                 "." + getExpDate().get(GregorianCalendar.MONTH) +
                 "." + getExpDate().get(GregorianCalendar.YEAR) +
                 '}';
+    }
+
+    @Override
+    public String getWordForSort() {
+        return getName();
+    }
+
+    @Override
+    public double getPriceForSort() {
+        return getPrice();
     }
 }
