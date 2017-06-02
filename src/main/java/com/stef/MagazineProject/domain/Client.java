@@ -84,16 +84,16 @@ public class Client extends Human implements Identifacator<Integer>, ISort {
 
     @Override
     public String toString() {
-        return "Client{" +
-                "Name: " + getName() +
-                ", Surname: " + getSurname() +
-                ", Login: " + getLogin() +
-                ", Born Date: " + getBornDate().get(GregorianCalendar.DATE) +
+        String tabulation = "\n________________________________________________";
+        return "Client:" + tabulation +
+                "\n |\tName: \t\t\t|\t" + getName() +
+                "\n |\tSurname: \t\t|\t" + getSurname() +
+                "\n |\tLogin: \t\t\t|\t" + getLogin() +
+                "\n |\tBorn Date: \t\t|\t" + getBornDate().get(GregorianCalendar.DATE) +
                 "." + getBornDate().get(GregorianCalendar.MONTH) +
                 "." + getBornDate().get(GregorianCalendar.YEAR) +
-                ", phoneNumber: " + phoneNumber +
-                ", address: " + address +
-                '}';
+                "\n |\tPhoneNumber: \t|\t" + phoneNumber +
+                "\n |\tAddress: \t\t|\t" + address + tabulation;
     }
 
 

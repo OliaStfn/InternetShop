@@ -14,6 +14,8 @@ public class MySQLClientDAOTest {
     public void createInDB() throws DaoException {
         Client client = new Client("Olga", "Stefanyshyn", 1999, 03, 22,
                 "0932202176", "Vovchynetska 198b/144");
+        client.setPassword("0000");
+        client.setLogin("kardash");
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Client.class);
         Client fieldclient = (Client) dao.createInDB(client);
@@ -42,7 +44,8 @@ public class MySQLClientDAOTest {
     public void delete() throws DaoException {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Client.class);
-        dao.delete(2);
+        Client findclient = (Client) dao.read(6);
+        dao.delete(findclient);
     }
 
     @Test

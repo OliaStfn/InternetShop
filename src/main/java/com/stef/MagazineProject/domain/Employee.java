@@ -117,18 +117,18 @@ public class Employee extends Human implements Identifacator<Integer>,ISort {
     @Override
     public String toString() {
         return "Employee{" +
-                "Name: " + getName() +
-                ", Surname: " + getSurname() +
-                ", Login: " + getLogin() +
-                ", Born Date: " + getBornDate().get(GregorianCalendar.DATE) +
+                "\n Name: " + getName() +
+                "\n Surname: " + getSurname() +
+                "\n Login: " + getLogin() +
+                "\n Born Date: " + getBornDate().get(GregorianCalendar.DATE) +
                 "." + getBornDate().get(GregorianCalendar.MONTH) +
                 "." + getBornDate().get(GregorianCalendar.YEAR) +
-                ", Date of begin: " + getDate_of_begin().get(GregorianCalendar.DATE) +
+                "\n Date of begin: " + getDate_of_begin().get(GregorianCalendar.DATE) +
                 "." + getDate_of_begin().get(GregorianCalendar.MONTH) +
                 "." + getDate_of_begin().get(GregorianCalendar.YEAR) +
-                ", Salary: " + salary +
-                ", Phone number: " + getPhoneNumber() +
-                ", Rating: " + rating +
+                "\n Salary: " + salary +
+                "\n Phone number: " + getPhoneNumber() +
+                "\n Rating: " + rating +
                 '}';
     }
 

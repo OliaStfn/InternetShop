@@ -95,11 +95,9 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
     public void delete(T obj) throws DaoException {
         String query = getDeleteQuery();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setObject(1, obj.getId());
-            statement.executeUpdate();
+            statement.setInt(1, obj.getId());
             int changedFields = statement.executeUpdate();
             if (changedFields != 1) throw new DaoException("During query deleted more than 1 field: " + changedFields);
-            statement.close();
         } catch (Exception e) {
             throw new DaoException();
         }

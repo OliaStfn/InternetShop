@@ -47,8 +47,8 @@ public class Manager extends Employee implements ISort {
     @Override
     public String toString() {
         return "Manager{" +
-                "Phone: " + phone +
-                ", Department: " + department +
+                "\n Phone: " + phone +
+                "\n Department: " + department +
                 super.toString() +
                 '}';
     }

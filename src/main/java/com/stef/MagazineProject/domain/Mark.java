@@ -3,7 +3,7 @@ package com.stef.MagazineProject.domain;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 
-public class Mark implements Serializable {
+public class Mark {
     private double mark;
     private GregorianCalendar time;
 
