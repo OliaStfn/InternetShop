@@ -25,7 +25,7 @@ public class MySQLProductDaoTest {
     public void read() throws Exception {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Product.class);
-        Product findproduct = (Product) dao.read(5);
+        Product findproduct = (Product) dao.read(4);
         assertNotNull(findproduct);
         System.out.println(findproduct.toString());
     }
@@ -34,7 +34,7 @@ public class MySQLProductDaoTest {
     public void update() throws Exception {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Product.class);
-        Product product = (Product) dao.read(5);
+        Product product = (Product) dao.read(4);
         product.setPrice(8);
         dao.update(product);
     }
@@ -43,7 +43,8 @@ public class MySQLProductDaoTest {
     public void delete() throws Exception {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Product.class);
-        dao.delete(10);
+        Product product = (Product) dao.read(4);
+        dao.delete(product);
     }
 
     @Test

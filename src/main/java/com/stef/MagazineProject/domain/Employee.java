@@ -117,17 +117,17 @@ public class Employee extends Human implements Identifacator<Integer>,ISort {
     @Override
     public String toString() {
         return "Employee: " +
-                "\n |\tName: \t\t\t|\t" + getName() +
+                "\n |\tName: \t\t\t\t|\t" + getName() +
                 "\n |\t Surname: \t\t\t|\t" + getSurname() +
                 "\n |\t Login: \t\t\t|\t" + getLogin() +
-                "\n |\t Born Date: \t\t\t|\t" + getBornDate().get(GregorianCalendar.DATE) +
+                "\n |\t Born Date: \t\t|\t" + getBornDate().get(GregorianCalendar.DATE) +
                 "." + getBornDate().get(GregorianCalendar.MONTH) +
                 "." + getBornDate().get(GregorianCalendar.YEAR) +
-                "\n |\t Date of begin: \t\t\t|\t" + getDate_of_begin().get(GregorianCalendar.DATE) +
+                "\n |\t Date of begin: \t|\t" + getDate_of_begin().get(GregorianCalendar.DATE) +
                 "." + getDate_of_begin().get(GregorianCalendar.MONTH) +
                 "." + getDate_of_begin().get(GregorianCalendar.YEAR) +
                 "\n |\t Salary: \t\t\t|\t" + salary +
-                "\n |\t Phone number: \t\t\t|\t" + getPhoneNumber() +
+                "\n |\t Phone number: \t\t|\t" + getPhoneNumber() +
                 "\n |\t Rating: \t\t\t|\t" + rating;
     }
 

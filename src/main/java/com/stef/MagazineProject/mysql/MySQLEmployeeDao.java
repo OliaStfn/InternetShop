@@ -141,5 +141,4 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
 
         return createInDB(tempEmployee);
     }
-
 }

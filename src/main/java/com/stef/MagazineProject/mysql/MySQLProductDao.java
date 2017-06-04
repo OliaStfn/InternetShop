@@ -38,7 +38,7 @@ public class MySQLProductDao extends AbstractDao<Product, Integer> {
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM goods_person WHERE id=?";
+        return "DELETE FROM goods_personal WHERE id=?;";
     }
 
     @Override
@@ -52,7 +52,7 @@ public class MySQLProductDao extends AbstractDao<Product, Integer> {
                 item.setPrice(resultSet.getDouble("price"));
                 item.setVendor(resultSet.getString("vendor"));
                 item.setProductionDate(convertToGD(resultSet.getDate("production_date")));
-                item.setProductionDate(convertToGD(resultSet.getDate("expiration_date")));
+                item.setExpDate(convertToGD(resultSet.getDate("expiration_date")));
                 products.add(item);
             }
         } catch (Exception e) {

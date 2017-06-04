@@ -79,13 +79,13 @@ public class Product implements Identifacator<Integer>,ISort {
     @Override
     public String toString() {
         return "Product: " +
-                "\n |\t Name: \t\t\t|\t" + name +
+                "\n |\t Name: \t\t\t\t|\t" + name +
                 "\n |\t Price: \t\t\t|\t" + price +
                 "\n |\t vendor: \t\t\t|\t" + vendor +
-                "\n |\t Production Date: \t\t\t|\t" +  getProductionDate().get(GregorianCalendar.DATE) +
+                "\n |\t Production Date: \t|\t" +  getProductionDate().get(GregorianCalendar.DATE) +
                 "." + getProductionDate().get(GregorianCalendar.MONTH) +
                 "." + getProductionDate().get(GregorianCalendar.YEAR) +
-                "\n |\t Expiration Date: \t\t\t|\t" + getExpDate().get(GregorianCalendar.DATE) +
+                "\n |\t Expiration Date: \t|\t" + getExpDate().get(GregorianCalendar.DATE) +
                 "." + getExpDate().get(GregorianCalendar.MONTH) +
                 "." + getExpDate().get(GregorianCalendar.YEAR);
     }

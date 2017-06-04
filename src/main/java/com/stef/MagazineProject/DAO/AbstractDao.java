@@ -3,6 +3,7 @@ package com.stef.MagazineProject.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -95,7 +96,7 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
     public void delete(T obj) throws DaoException {
         String query = getDeleteQuery();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, obj.getId());
+            statement.setObject(1, obj.getId());
             int changedFields = statement.executeUpdate();
             if (changedFields != 1) throw new DaoException("During query deleted more than 1 field: " + changedFields);
         } catch (Exception e) {

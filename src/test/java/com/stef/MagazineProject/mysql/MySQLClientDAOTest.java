@@ -44,7 +44,7 @@ public class MySQLClientDAOTest {
     public void delete() throws DaoException {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Client.class);
-        Client findclient = (Client) dao.read(6);
+        Client findclient = (Client) dao.read(8);
         dao.delete(findclient);
     }
 
