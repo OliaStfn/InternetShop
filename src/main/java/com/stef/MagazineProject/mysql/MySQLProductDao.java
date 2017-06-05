@@ -23,22 +23,32 @@ public class MySQLProductDao extends AbstractDao<Product, Integer> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT * FROM goods_personal";
+        return "SELECT * FROM goods_personal WHERE good_id=?;";
+    }
+
+    @Override
+    public String getSelectQuery(String str) {
+        return "SELECT * FROM goods_personal WHERE good_id="+str;
+    }
+
+    @Override
+    public String getSelectAllQuery() {
+        return "SELECT * FROM goods_personal;";
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO goods_personal(name,price,vendor,production_date,expiration_date) VALUES(?,?,?,?,?);";
+        return "INSERT INTO goods_personal(good_name,good_price,good_vendor,good_production_date,good_expiration_date) VALUES(?,?,?,?,?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE goods_personal SET name=?,price=?,vendor=?,production_date=?,expiration_date=? WHERE id=?;";
+        return "UPDATE goods_personal SET good_name=?,good_price=?,good_vendor=?,good_production_date=?,good_expiration_date=? WHERE good_id=?;";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM goods_personal WHERE id=?;";
+        return "DELETE FROM goods_personal WHERE good_id=?;";
     }
 
     @Override
@@ -47,12 +57,12 @@ public class MySQLProductDao extends AbstractDao<Product, Integer> {
         try {
             while (resultSet.next()) {
                 ProductForDB item = new ProductForDB();
-                item.setId(resultSet.getInt("id"));
-                item.setName(resultSet.getString("name"));
-                item.setPrice(resultSet.getDouble("price"));
-                item.setVendor(resultSet.getString("vendor"));
-                item.setProductionDate(convertToGD(resultSet.getDate("production_date")));
-                item.setExpDate(convertToGD(resultSet.getDate("expiration_date")));
+                item.setId(resultSet.getInt("good_id"));
+                item.setName(resultSet.getString("good_name"));
+                item.setPrice(resultSet.getDouble("good_price"));
+                item.setVendor(resultSet.getString("good_vendor"));
+                item.setProductionDate(convertToGD(resultSet.getDate("good_production_date")));
+                item.setExpDate(convertToGD(resultSet.getDate("good_expiration_date")));
                 products.add(item);
             }
         } catch (Exception e) {
@@ -62,7 +72,7 @@ public class MySQLProductDao extends AbstractDao<Product, Integer> {
     }
 
     @Override
-    public void statementUpdate(PreparedStatement statement, Product obj) throws DaoException {
+    public void statementUpdate(PreparedStatement statement, Product obj, int key) throws DaoException {
         try {
             statement.setString(1, obj.getName());
             statement.setDouble(2, obj.getPrice());
@@ -76,13 +86,31 @@ public class MySQLProductDao extends AbstractDao<Product, Integer> {
     }
 
     @Override
-    public void statementInsert(PreparedStatement statement, Product obj) throws DaoException {
+    public void statementInsert(PreparedStatement statement, Product obj,int key) throws DaoException {
         try {
             statement.setString(1, obj.getName());
             statement.setDouble(2, obj.getPrice());
             statement.setString(3, obj.getVendor());
             statement.setDate(4, convertToDate(obj.getProductionDate()));
             statement.setDate(5,convertToDate(obj.getExpDate()));
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public void statementDelete(PreparedStatement statement, Product obj, int key) throws DaoException {
+        try {
+            statement.setObject(1, obj.getId());
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public void statementSelect(PreparedStatement statement, int key) throws DaoException {
+        try {
+            statement.setObject(1, key);
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -112,6 +140,6 @@ public class MySQLProductDao extends AbstractDao<Product, Integer> {
         System.out.println("Enter expiration day of product: ");
         int expday = in.nextInt();
         tempProduct.setExpDate(new GregorianCalendar(expyear, expmonth, expday));
-        return createInDB(tempProduct);
+        return createInDB(tempProduct,(Integer) 1);
     }
 }

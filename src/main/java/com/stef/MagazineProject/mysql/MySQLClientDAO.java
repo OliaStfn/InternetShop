@@ -28,24 +28,35 @@ public class MySQLClientDAO extends AbstractDao<Client, Integer> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT * FROM client_personal";
+        return "SELECT * FROM clients_personal WHERE client_id=?;";
     }
 
     @Override
+    public String getSelectQuery(String str) {
+        return "SELECT * FROM clients_personal WHERE client_id="+str;
+    }
+
+    @Override
+    public String getSelectAllQuery() {
+        return "SELECT * FROM clients_personal;";
+    }
+
+
+    @Override
     public String getCreateQuery() {
-        return "INSERT INTO client_personal(name,surname,born_date,phone_number,address," +
-                "login,password) VALUES(?,?,?,?,?,?,?);";
+        return "INSERT INTO clients_personal(client_name,client_surname,client_born_date,client_phone_number,client_address," +
+                "client_login,client_password) VALUES(?,?,?,?,?,?,?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE client_personal SET name=?,surname=?,born_date=?,phone_number=?," +
-                "address=?,login=?,password=? WHERE id=?;";
+        return "UPDATE clients_personal SET client_name=?,client_surname=?,client_born_date=?,client_phone_number=?," +
+                "client_address=?,client_login=?,client_password=? WHERE client_id=?;";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM client_personal WHERE id=?";
+        return "DELETE FROM clients_personal WHERE client_id=?";
     }
 
     @Override
@@ -54,14 +65,14 @@ public class MySQLClientDAO extends AbstractDao<Client, Integer> {
         try {
             while (resultSet.next()) {
                 MySQLClientDAO.ClientForDB client = new MySQLClientDAO.ClientForDB();
-                client.setId(resultSet.getInt("id"));
-                client.setName(resultSet.getString("name"));
-                client.setSurname(resultSet.getString("surname"));
-                client.setBornDate(convertToGD(resultSet.getDate("born_date")));
-                client.setPhoneNumber(resultSet.getString("phone_number"));
-                client.setAddress(resultSet.getString("address"));
-                client.setLogin(resultSet.getString("login"));
-                client.setPassword(resultSet.getString("password"));
+                client.setId(resultSet.getInt("client_id"));
+                client.setName(resultSet.getString("client_name"));
+                client.setSurname(resultSet.getString("client_surname"));
+                client.setBornDate(convertToGD(resultSet.getDate("client_born_date")));
+                client.setPhoneNumber(resultSet.getString("client_phone_number"));
+                client.setAddress(resultSet.getString("client_address"));
+                client.setLogin(resultSet.getString("client_login"));
+                client.setPassword(resultSet.getString("client_password"));
                 clients.add(client);
             }
         } catch (Exception e) {
@@ -71,7 +82,7 @@ public class MySQLClientDAO extends AbstractDao<Client, Integer> {
     }
 
     @Override
-    public void statementUpdate(PreparedStatement statement, Client obj) throws DaoException {
+    public void statementUpdate(PreparedStatement statement, Client obj, int key) throws DaoException {
         try {
             statement.setString(1, obj.getName());
             statement.setString(2, obj.getSurname());
@@ -87,7 +98,7 @@ public class MySQLClientDAO extends AbstractDao<Client, Integer> {
     }
 
     @Override
-    public void statementInsert(PreparedStatement statement, Client obj) throws DaoException {
+    public void statementInsert(PreparedStatement statement, Client obj,int key) throws DaoException {
         try {
             statement.setString(1, obj.getName());
             statement.setString(2, obj.getSurname());
@@ -96,6 +107,24 @@ public class MySQLClientDAO extends AbstractDao<Client, Integer> {
             statement.setString(5,obj.getAddress());
             statement.setString(6,obj.getLogin());
             statement.setString(7,obj.getPassword());
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public void statementDelete(PreparedStatement statement, Client obj, int key) throws DaoException {
+        try {
+            statement.setObject(1, obj.getId());
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public void statementSelect(PreparedStatement statement, int key) throws DaoException {
+        try {
+            statement.setObject(1, key);
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -138,7 +167,7 @@ public class MySQLClientDAO extends AbstractDao<Client, Integer> {
         System.out.println("Enter your password: ");
         tempClient.setPassword(in.nextLine());
 
-        return createInDB(tempClient);
+        return createInDB(tempClient,1);
     }
 
 }

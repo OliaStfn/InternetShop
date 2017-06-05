@@ -21,7 +21,7 @@ public class MySQLEmployeeDaoTest {
         employee.setLogin("vitiksan");
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Employee.class);
-        Employee fieldemployee = (Employee) dao.createInDB(employee);
+        Employee fieldemployee = (Employee) dao.createInDB(employee,1);
         System.out.println(fieldemployee.toString());
     }
 
@@ -29,7 +29,7 @@ public class MySQLEmployeeDaoTest {
     public void read() throws Exception {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Employee.class);
-        Employee findemployee = (Employee) dao.read(1);
+        Employee findemployee = (Employee) dao.read(3);
         assertNotNull(findemployee);
         System.out.println(findemployee.toString());
     }
@@ -38,17 +38,17 @@ public class MySQLEmployeeDaoTest {
     public void update() throws Exception {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(),Employee.class);
-        Employee employee = (Employee) dao.read(1);
+        Employee employee = (Employee) dao.read(3);
         employee.setName("Vitalik");
-        dao.update(employee);
+        dao.update(employee,1);
     }
 
     @Test
     public void delete() throws Exception {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(),  Employee.class);
-        Employee findemployee = ( Employee) dao.read(2);
-        dao.delete(findemployee);
+        Employee findemployee = ( Employee) dao.read(3);
+        dao.delete(findemployee,1);
     }
 
     @Test

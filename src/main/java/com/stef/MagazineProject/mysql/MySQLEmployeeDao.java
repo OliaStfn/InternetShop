@@ -26,24 +26,37 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT * FROM employee_personal";
+        return "SELECT * FROM employees_personal WHERE employee_id=?;";
+    }
+
+    @Override
+    public String getSelectQuery(String str) {
+        return "SELECT * FROM employees_personal WHERE employee_id="+str;
+    }
+
+    @Override
+    public String getSelectAllQuery() {
+        return "SELECT * FROM employees_personal;";
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO employee_personal(name,surname,born_date,phone_number,date_of_begin," +
-                "salary,rating,count_marks,login,password) VALUES(?,?,?,?,?,?,?,?,?,?);";
+        return "INSERT INTO employees_personal(employee_name,employee_surname,employee_born_date," +
+                "employee_phone_number,employee_date_of_begin," +
+                "employee_salary,employee_login,employee_password" +
+                ") VALUES(?,?,?,?,?,?,?,?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE employee_personal SET name=?,surname=?,born_date=?,phone_number=?,date_of_begin=?," +
-                "salary=?,rating=?,count_marks=?,login=?,password=? WHERE id=?;";
+        return "UPDATE employees_personal SET employee_name=?,employee_surname=?,employee_born_date=?," +
+                "employee_phone_number=?,employee_date_of_begin=?," +
+                "employee_salary=?,employee_login=?,employee_password=? WHERE employee_id=?;";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM employee_personal WHERE id=?";
+        return "DELETE FROM employees_personal WHERE employee_id=?";
     }
 
     @Override
@@ -52,17 +65,15 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
         try {
             while (resultSet.next()) {
                 MySQLEmployeeDao.EmployeeForDB employee = new MySQLEmployeeDao.EmployeeForDB();
-                employee.setId(resultSet.getInt("id"));
-                employee.setName(resultSet.getString("name"));
-                employee.setSurname(resultSet.getString("surname"));
-                employee.setBornDate(convertToGD(resultSet.getDate("born_date")));
-                employee.setPhoneNumber(resultSet.getString("phone_number"));
-                employee.setDate_of_begin(convertToGD(resultSet.getDate("date_of_begin")));
-                employee.setSalary(resultSet.getDouble("salary"));
-                employee.setRating(resultSet.getDouble("rating"));
-                employee.setCountMarks(resultSet.getInt("count_marks"));
-                employee.setLogin(resultSet.getString("login"));
-                employee.setPassword(resultSet.getString("password"));
+                employee.setId(resultSet.getInt("employee_id"));
+                employee.setName(resultSet.getString("employee_name"));
+                employee.setSurname(resultSet.getString("employee_surname"));
+                employee.setBornDate(convertToGD(resultSet.getDate("employee_born_date")));
+                employee.setPhoneNumber(resultSet.getString("employee_phone_number"));
+                employee.setDate_of_begin(convertToGD(resultSet.getDate("employee_date_of_begin")));
+                employee.setSalary(resultSet.getDouble("employee_salary"));
+                employee.setLogin(resultSet.getString("employee_login"));
+                employee.setPassword(resultSet.getString("employee_password"));
                 employees.add(employee);
             }
         } catch (Exception e) {
@@ -72,7 +83,7 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
     }
 
     @Override
-    public void statementUpdate(PreparedStatement statement, Employee obj) throws DaoException {
+    public void statementUpdate(PreparedStatement statement, Employee obj,int key) throws DaoException {
         try {
             statement.setString(1, obj.getName());
             statement.setString(2, obj.getSurname());
@@ -80,18 +91,16 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
             statement.setString(4,obj.getPhoneNumber());
             statement.setDate(5,convertToDate(obj.getDate_of_begin()));
             statement.setDouble(6,obj.getSalary());
-            statement.setDouble(7,obj.getRating());
-            statement.setInt(8,obj.getCountMarks());
-            statement.setString(9,obj.getLogin());
-            statement.setString(10,obj.getPassword());
-            statement.setInt(11, obj.getId());
+            statement.setString(7,obj.getLogin());
+            statement.setString(8,obj.getPassword());
+            statement.setInt(9, obj.getId());
         } catch (SQLException e) {
             throw new DaoException(e);
         }
     }
 
     @Override
-    public void statementInsert(PreparedStatement statement,Employee obj) throws DaoException {
+    public void statementInsert(PreparedStatement statement,Employee obj,int key) throws DaoException {
         try {
             statement.setString(1, obj.getName());
             statement.setString(2, obj.getSurname());
@@ -99,10 +108,26 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
             statement.setString(4,obj.getPhoneNumber());
             statement.setDate(5,convertToDate(obj.getDate_of_begin()));
             statement.setDouble(6,obj.getSalary());
-            statement.setDouble(7,obj.getRating());
-            statement.setInt(8,obj.getCountMarks());
-            statement.setString(9,obj.getLogin());
-            statement.setString(10,obj.getPassword());
+            statement.setString(7,obj.getLogin());
+            statement.setString(8,obj.getPassword());
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public void statementDelete(PreparedStatement statement, Employee obj, int key) throws DaoException {
+        try {
+            statement.setObject(1, obj.getId());
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public void statementSelect(PreparedStatement statement, int key) throws DaoException {
+        try {
+            statement.setObject(1, key);
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -139,6 +164,6 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
         System.out.println("Enter your password: ");
         tempEmployee.setPassword(in.next());
 
-        return createInDB(tempEmployee);
+        return createInDB(tempEmployee,1);
     }
 }

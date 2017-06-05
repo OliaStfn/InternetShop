@@ -18,30 +18,37 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
 
     public abstract String getSelectQuery();
 
+    public abstract String getSelectQuery(String str);
+
+    public abstract String getSelectAllQuery();
+
     public abstract String getUpdateQuery();
 
     public abstract String getDeleteQuery();
 
     public abstract ArrayList<T> parseResultSet(ResultSet resultSet) throws DaoException;
 
-    public abstract void statementUpdate(PreparedStatement statement, T obj) throws DaoException;
+    public abstract void statementUpdate(PreparedStatement statement, T obj, int key) throws DaoException;
 
-    public abstract void statementInsert(PreparedStatement statement, T obj) throws DaoException;
+    public abstract void statementInsert(PreparedStatement statement, T obj, int key) throws DaoException;
 
+    public abstract void statementDelete(PreparedStatement statement, T obj, int key) throws DaoException;
+
+    public abstract void statementSelect(PreparedStatement statement, int key) throws DaoException;
 
     @Override
-    public T createInDB(T object) throws DaoException {
+    public T createInDB(T object, int key) throws DaoException {
         T tempObj;
         String query = getCreateQuery();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statementInsert(statement, object);
+            statementInsert(statement, object,key);
             int changedFields = statement.executeUpdate();
             if (changedFields != 1)
                 throw new DaoException("During creating,created more than 1 object: " + changedFields);
         } catch (Exception e) {
             throw new DaoException();
         }
-        query = getSelectQuery() + " WHERE id=(SELECT last_insert_id())";
+        query = getSelectQuery("(SELECT last_insert_id());");
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             ArrayList<T> someList = parseResultSet(resultSet);
@@ -61,9 +68,8 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
     public T read(PK key) throws DaoException {
         ArrayList<T> someList;
         String query = getSelectQuery();
-        query += " WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, key);
+            statementSelect(statement,key);
             ResultSet resultSet = statement.executeQuery();
             someList = parseResultSet(resultSet);
 
@@ -80,10 +86,10 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
     }
 
     @Override
-    public void update(T obj) throws DaoException {
+    public void update(T obj, int key) throws DaoException {
         String query = getUpdateQuery();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statementUpdate(statement, obj);
+            statementUpdate(statement, obj,key);
             int changedFields = statement.executeUpdate();
             if (changedFields != 1) throw new DaoException("During update more than 1 field");
             statement.close();
@@ -93,10 +99,10 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
     }
 
     @Override
-    public void delete(T obj) throws DaoException {
+    public void delete(T obj, int key) throws DaoException {
         String query = getDeleteQuery();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setObject(1, obj.getId());
+            statementDelete(statement,obj,key);
             int changedFields = statement.executeUpdate();
             if (changedFields != 1) throw new DaoException("During query deleted more than 1 field: " + changedFields);
         } catch (Exception e) {
@@ -107,7 +113,7 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
     @Override
     public ArrayList<T> readAll() throws DaoException {
         ArrayList<T> someList;
-        String query = getSelectQuery();
+        String query = getSelectAllQuery();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             someList = parseResultSet(resultSet);
@@ -131,3 +137,4 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
         return  new java.sql.Date(gregorianCalendar.getTime().getTime());
     }
 }
+
