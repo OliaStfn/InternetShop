@@ -26,13 +26,9 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT * FROM employees_personal WHERE employee_id=?;";
+        return "SELECT * FROM employees_personal WHERE employee_id=";
     }
 
-    @Override
-    public String getSelectQuery(String str) {
-        return "SELECT * FROM employees_personal WHERE employee_id="+str;
-    }
 
     @Override
     public String getSelectAllQuery() {
@@ -83,7 +79,7 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
     }
 
     @Override
-    public void statementUpdate(PreparedStatement statement, Employee obj,int key) throws DaoException {
+    public void statementUpdate(PreparedStatement statement, Employee obj) throws DaoException {
         try {
             statement.setString(1, obj.getName());
             statement.setString(2, obj.getSurname());
@@ -100,7 +96,7 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
     }
 
     @Override
-    public void statementInsert(PreparedStatement statement,Employee obj,int key) throws DaoException {
+    public void statementInsert(PreparedStatement statement,Employee obj) throws DaoException {
         try {
             statement.setString(1, obj.getName());
             statement.setString(2, obj.getSurname());
@@ -110,24 +106,6 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
             statement.setDouble(6,obj.getSalary());
             statement.setString(7,obj.getLogin());
             statement.setString(8,obj.getPassword());
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public void statementDelete(PreparedStatement statement, Employee obj, int key) throws DaoException {
-        try {
-            statement.setObject(1, obj.getId());
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public void statementSelect(PreparedStatement statement, int key) throws DaoException {
-        try {
-            statement.setObject(1, key);
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -164,6 +142,6 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
         System.out.println("Enter your password: ");
         tempEmployee.setPassword(in.next());
 
-        return createInDB(tempEmployee,1);
+        return createInDB(tempEmployee);
     }
 }

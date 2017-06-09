@@ -17,7 +17,7 @@ public class MySQLProductDaoTest {
                 new GregorianCalendar(Calendar.YEAR, Calendar.MONTH, Calendar.DATE + 1));
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Product.class);
-        Product fieldproduct = (Product) dao.createInDB(product,1);
+        Product fieldproduct = (Product) dao.createInDB(product);
         System.out.println(fieldproduct.toString());
     }
 
@@ -36,7 +36,7 @@ public class MySQLProductDaoTest {
         GenericDao dao = factory.getDao(factory.getConnection(), Product.class);
         Product product = (Product) dao.read(1);
         product.setPrice(8);
-        dao.update(product,1);
+        dao.update(product);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class MySQLProductDaoTest {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Product.class);
         Product product = (Product) dao.read(1);
-        dao.delete(product,1);
+        dao.delete(product);
     }
 
     @Test

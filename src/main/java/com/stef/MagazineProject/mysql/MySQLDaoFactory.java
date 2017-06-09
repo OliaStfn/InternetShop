@@ -3,12 +3,9 @@ package com.stef.MagazineProject.mysql;
 import com.stef.MagazineProject.DAO.DaoException;
 import com.stef.MagazineProject.DAO.DaoFactory;
 import com.stef.MagazineProject.DAO.GenericDao;
-import com.stef.MagazineProject.domain.Client;
-import com.stef.MagazineProject.domain.Employee;
-import com.stef.MagazineProject.domain.Product;
+import com.stef.MagazineProject.domain.*;
 import org.apache.log4j.Logger;
 
-import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -68,7 +65,7 @@ public class MySQLDaoFactory implements DaoFactory<Connection> {
         allDao.put(Client.class, new DaoCreator<Connection>() {
             @Override
             public GenericDao create(Connection connection) {
-                return new MySQLClientDAO(connection);
+                return new MySQLClientDao(connection);
             }
         });
 
@@ -76,6 +73,20 @@ public class MySQLDaoFactory implements DaoFactory<Connection> {
             @Override
             public GenericDao create(Connection connection) {
                 return new MySQLEmployeeDao(connection);
+            }
+        });
+
+        allDao.put(Order.class, new DaoFactory.DaoCreator<Connection>() {
+            @Override
+            public GenericDao create(Connection connection) {
+                return new MySQLOrderDao(connection);
+            }
+        });
+
+        allDao.put(FavouriteList.class, new DaoFactory.DaoCreator<Connection>() {
+            @Override
+            public GenericDao create(Connection connection) {
+                return new MySQLFavouriteListDao(connection);
             }
         });
     }

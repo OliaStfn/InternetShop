@@ -18,7 +18,7 @@ public class MySQLClientDAOTest {
         client.setLogin("kardash11");
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Client.class);
-        Client fieldclient = (Client) dao.createInDB(client,0);
+        Client fieldclient = (Client) dao.createInDB(client);
         System.out.println(fieldclient.toString());
     }
 
@@ -37,7 +37,7 @@ public class MySQLClientDAOTest {
         GenericDao dao = factory.getDao(factory.getConnection(), Client.class);
         Client client = (Client) dao.read(14);
         client.setName("Olya");
-        dao.update(client,0);
+        dao.update(client);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class MySQLClientDAOTest {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Client.class);
         Client findclient = (Client) dao.read(19);
-        dao.delete(findclient,0);
+        dao.delete(findclient);
     }
 
     @Test

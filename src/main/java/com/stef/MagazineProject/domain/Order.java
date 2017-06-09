@@ -1,15 +1,22 @@
 package com.stef.MagazineProject.domain;
 
+import com.stef.MagazineProject.DAO.Identifacator;
+
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class Orders {
+public class Order implements Identifacator<Integer>{
     private int clientId;
     private int orderId;
     private double allPrice;
+    private String status;
+    private GregorianCalendar orderDate;
     private ArrayList<OrderLine> lines;
 
-    public Orders(int clientId) {
+    public Order() {
+    }
+
+    public Order(int clientId) {
         this.clientId = clientId;
         allPrice = 0;
         lines = new ArrayList<>();
@@ -23,11 +30,11 @@ public class Orders {
         this.clientId = clientId;
     }
 
-    public int getOrderId() {
+    public int getId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setId(int orderId) {
         this.orderId = orderId;
     }
 
@@ -51,5 +58,21 @@ public class Orders {
     public void addNewLine(String name, double price, String vendor, GregorianCalendar productionDate, GregorianCalendar expDate, int count){
         lines.add(new OrderLine(name,price,vendor,productionDate,expDate,count));
         allPrice=allPrice();
+    }
+
+    public void setAllPrice(double allPrice) {
+        this.allPrice = allPrice;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setOrderDate(GregorianCalendar orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

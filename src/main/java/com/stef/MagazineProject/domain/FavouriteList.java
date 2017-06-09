@@ -1,11 +1,32 @@
 package com.stef.MagazineProject.domain;
 
+import com.stef.MagazineProject.DAO.Identifacator;
 import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class FavouriteList {
+public class FavouriteList implements Identifacator<Integer>{
     private static final Logger log = Logger.getLogger(FavouriteList.class);
+    private int id;
+    private int clientId;
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
     private ArrayList<Product> item;
 
     public FavouriteList() {

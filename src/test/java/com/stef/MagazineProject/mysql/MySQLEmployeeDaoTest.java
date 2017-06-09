@@ -21,7 +21,7 @@ public class MySQLEmployeeDaoTest {
         employee.setLogin("vitiksan");
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Employee.class);
-        Employee fieldemployee = (Employee) dao.createInDB(employee,1);
+        Employee fieldemployee = (Employee) dao.createInDB(employee);
         System.out.println(fieldemployee.toString());
     }
 
@@ -40,7 +40,7 @@ public class MySQLEmployeeDaoTest {
         GenericDao dao = factory.getDao(factory.getConnection(),Employee.class);
         Employee employee = (Employee) dao.read(3);
         employee.setName("Vitalik");
-        dao.update(employee,1);
+        dao.update(employee);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class MySQLEmployeeDaoTest {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(),  Employee.class);
         Employee findemployee = ( Employee) dao.read(3);
-        dao.delete(findemployee,1);
+        dao.delete(findemployee);
     }
 
     @Test
