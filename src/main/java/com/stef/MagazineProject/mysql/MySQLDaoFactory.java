@@ -55,10 +55,10 @@ public class MySQLDaoFactory implements DaoFactory<Connection> {
     public MySQLDaoFactory() {
         allDao = new HashMap<Class, DaoCreator>();
 
-        allDao.put(Product.class, new DaoFactory.DaoCreator<Connection>() {
+        allDao.put(Goods.class, new DaoFactory.DaoCreator<Connection>() {
             @Override
             public GenericDao create(Connection connection) {
-                return new MySQLProductDao(connection);
+                return new MySQLGoodsDao(connection);
             }
         });
 

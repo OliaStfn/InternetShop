@@ -29,7 +29,7 @@ public class MySQLEmployeeDaoTest {
     public void read() throws Exception {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(), Employee.class);
-        Employee findemployee = (Employee) dao.read(3);
+        Employee findemployee = (Employee) dao.read(1);
         assertNotNull(findemployee);
         System.out.println(findemployee.toString());
     }
@@ -38,7 +38,7 @@ public class MySQLEmployeeDaoTest {
     public void update() throws Exception {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(),Employee.class);
-        Employee employee = (Employee) dao.read(3);
+        Employee employee = (Employee) dao.read(1);
         employee.setName("Vitalik");
         dao.update(employee);
     }
@@ -47,7 +47,7 @@ public class MySQLEmployeeDaoTest {
     public void delete() throws Exception {
         MySQLDaoFactory factory = new MySQLDaoFactory();
         GenericDao dao = factory.getDao(factory.getConnection(),  Employee.class);
-        Employee findemployee = ( Employee) dao.read(3);
+        Employee findemployee = ( Employee) dao.read(1);
         dao.delete(findemployee);
     }
 

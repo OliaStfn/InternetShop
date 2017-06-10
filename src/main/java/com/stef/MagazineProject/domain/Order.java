@@ -1,6 +1,9 @@
 package com.stef.MagazineProject.domain;
 
+import com.stef.MagazineProject.DAO.DaoException;
+import com.stef.MagazineProject.DAO.GenericDao;
 import com.stef.MagazineProject.DAO.Identifacator;
+import com.stef.MagazineProject.mysql.MySQLDaoFactory;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -8,9 +11,8 @@ import java.util.GregorianCalendar;
 public class Order implements Identifacator<Integer>{
     private int clientId;
     private int orderId;
-    private double allPrice;
-    private String status;
-    private GregorianCalendar orderDate;
+    private Status status;
+    private GregorianCalendar changeStatusDate;;
     private ArrayList<OrderLine> lines;
 
     public Order() {
@@ -18,7 +20,6 @@ public class Order implements Identifacator<Integer>{
 
     public Order(int clientId) {
         this.clientId = clientId;
-        allPrice = 0;
         lines = new ArrayList<>();
     }
 
@@ -38,10 +39,6 @@ public class Order implements Identifacator<Integer>{
         this.orderId = orderId;
     }
 
-    public double getAllPrice() {
-        return allPrice;
-    }
-
     public double allPrice() {
         double temp=0;
         for (OrderLine line: lines){
@@ -50,29 +47,25 @@ public class Order implements Identifacator<Integer>{
         return temp;
     }
 
-    public void addNewLine(int count,Product product){
-        lines.add(new OrderLine(product,count));
-        allPrice=allPrice();
-    }
-
-    public void addNewLine(String name, double price, String vendor, GregorianCalendar productionDate, GregorianCalendar expDate, int count){
-        lines.add(new OrderLine(name,price,vendor,productionDate,expDate,count));
-        allPrice=allPrice();
-    }
-
-    public void setAllPrice(double allPrice) {
-        this.allPrice = allPrice;
+    public void addNewLine(int count,Goods goods){
+        lines.add(new OrderLine(goods,count,orderId));
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status.setStatus(status);
     }
 
-    public void setOrderDate(GregorianCalendar orderDate) {
-        this.orderDate = orderDate;
+    public void setStatus() throws DaoException {
+        MySQLDaoFactory factory = new MySQLDaoFactory();
+        GenericDao dao = factory.getDao(factory.getConnection(), Status.class);
+        status =(Status) dao.create();
+    }
+
+    public void setChangeStatusDate(GregorianCalendar changeStatusDate) {
+        this.changeStatusDate = changeStatusDate;
     }
 
     public String getStatus() {
-        return status;
+        return status.getStatus();
     }
 }

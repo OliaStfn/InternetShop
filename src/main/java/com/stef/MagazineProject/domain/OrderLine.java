@@ -1,30 +1,66 @@
 package com.stef.MagazineProject.domain;
 
-import java.util.GregorianCalendar;
+import com.stef.MagazineProject.DAO.Identifacator;
 
-public class OrderLine {
-    private Product product;
+public class OrderLine implements Identifacator<Integer>{
+    private int orderId;
+    private int orderLineId;
+    private Goods goods;
     private int count;
+    private double price;
 
-    public OrderLine(String name, double price, String vendor, GregorianCalendar productionDate, GregorianCalendar expDate, int count) {
-        product = new Product(name,price,vendor,productionDate,expDate);
+    public OrderLine() {
+
+    }
+
+    public OrderLine(Goods goods, int count,int orderId) {
+        this.goods = goods;
+        this.count = count;
+        this.orderId=orderId;
+        price=setPrice();
+    }
+
+    public double setPrice() {
+        return count * goods.getPrice();
+    }
+
+    public Goods getGoods() {
+        return goods;
+    }
+
+    public void setGoods(Goods goods) {
+        this.goods = goods;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getId() {
+        return orderLineId;
+    }
+
+    public void setId(int orderLineId) {
+        this.orderLineId = orderLineId;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
         this.count = count;
     }
 
-    public OrderLine(Product product,int count) {
-        this.product = product;
-        this.count = count;
+    public double getPrice() {
+        return price;
     }
 
-    public double getPrice(){
-        return count*product.getPrice();
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

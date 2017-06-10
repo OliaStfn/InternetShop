@@ -28,31 +28,31 @@ public class MySQLClientDao extends AbstractDao<Client, Integer> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT * FROM clients_personal WHERE client_id=";
+        return "SELECT * FROM clients WHERE client_id=";
     }
 
 
     @Override
     public String getSelectAllQuery() {
-        return "SELECT * FROM clients_personal;";
+        return "SELECT * FROM clients;";
     }
 
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO clients_personal(client_name,client_surname,client_born_date,client_phone_number,client_address," +
+        return "INSERT INTO clients(client_name,client_surname,client_born_date,client_phone_number,client_address," +
                 "client_login,client_password) VALUES(?,?,?,?,?,?,?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE clients_personal SET client_name=?,client_surname=?,client_born_date=?,client_phone_number=?," +
+        return "UPDATE clients SET client_name=?,client_surname=?,client_born_date=?,client_phone_number=?," +
                 "client_address=?,client_login=?,client_password=? WHERE client_id=?;";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM clients_personal WHERE client_id=?";
+        return "DELETE FROM clients WHERE client_id=?";
     }
 
     @Override

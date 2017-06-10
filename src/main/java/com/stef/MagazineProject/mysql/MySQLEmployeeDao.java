@@ -26,33 +26,34 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT * FROM employees_personal WHERE employee_id=";
+        return "SELECT * FROM employees WHERE employee_id=";
     }
 
 
     @Override
     public String getSelectAllQuery() {
-        return "SELECT * FROM employees_personal;";
+        return "SELECT * FROM employees;";
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO employees_personal(employee_name,employee_surname,employee_born_date," +
+        return "INSERT INTO employees(employee_name,employee_surname,employee_born_date," +
                 "employee_phone_number,employee_date_of_begin," +
-                "employee_salary,employee_login,employee_password" +
-                ") VALUES(?,?,?,?,?,?,?,?);";
+                "employee_salary,employee_rating,employee_count_marks,employee_login,employee_password)" +
+                " VALUES(?,?,?,?,?,?,?,?,?,?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE employees_personal SET employee_name=?,employee_surname=?,employee_born_date=?," +
+        return "UPDATE employees SET employee_name=?,employee_surname=?,employee_born_date=?," +
                 "employee_phone_number=?,employee_date_of_begin=?," +
-                "employee_salary=?,employee_login=?,employee_password=? WHERE employee_id=?;";
+                "employee_salary=?, employee_rating=?, employee_count_marks=?," +
+                "employee_login=?,employee_password=? WHERE employee_id=?;";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM employees_personal WHERE employee_id=?";
+        return "DELETE FROM employees WHERE employee_id=?";
     }
 
     @Override
@@ -68,6 +69,8 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
                 employee.setPhoneNumber(resultSet.getString("employee_phone_number"));
                 employee.setDate_of_begin(convertToGD(resultSet.getDate("employee_date_of_begin")));
                 employee.setSalary(resultSet.getDouble("employee_salary"));
+                employee.setRating(resultSet.getDouble("employee_rating"));
+                employee.setCountMarks(resultSet.getInt("employee_count_marks"));
                 employee.setLogin(resultSet.getString("employee_login"));
                 employee.setPassword(resultSet.getString("employee_password"));
                 employees.add(employee);
@@ -87,9 +90,11 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
             statement.setString(4,obj.getPhoneNumber());
             statement.setDate(5,convertToDate(obj.getDate_of_begin()));
             statement.setDouble(6,obj.getSalary());
-            statement.setString(7,obj.getLogin());
-            statement.setString(8,obj.getPassword());
-            statement.setInt(9, obj.getId());
+            statement.setDouble(7,obj.getRating());
+            statement.setInt(8,obj.getCountMarks());
+            statement.setString(9,obj.getLogin());
+            statement.setString(10,obj.getPassword());
+            statement.setInt(11, obj.getId());
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -104,8 +109,10 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
             statement.setString(4,obj.getPhoneNumber());
             statement.setDate(5,convertToDate(obj.getDate_of_begin()));
             statement.setDouble(6,obj.getSalary());
-            statement.setString(7,obj.getLogin());
-            statement.setString(8,obj.getPassword());
+            statement.setDouble(7,obj.getRating());
+            statement.setInt(8,obj.getCountMarks());
+            statement.setString(9,obj.getLogin());
+            statement.setString(10,obj.getPassword());
         } catch (SQLException e) {
             throw new DaoException(e);
         }

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Basket {
-    private ArrayList<Product> basket = new ArrayList<>();
+    private ArrayList<Goods> basket = new ArrayList<>();
 
-    public void addToBasket(Product product) {
-        basket.add(product);
+    public void addToBasket(Goods goods) {
+        basket.add(goods);
     }
 
     public void deleteFromBasket() {

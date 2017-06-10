@@ -22,29 +22,28 @@ public class MySQLFavouriteListDao extends AbstractDao<FavouriteList,Integer> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT * FROM favourite_list_personal WHERE favourite_list_id=";
+        return "SELECT * FROM favourite_lists WHERE favourite_list_id=";
     }
-
 
     @Override
     public String getSelectAllQuery() {
-        return "SELECT * FROM favourite_list_personal;";
+        return "SELECT * FROM favourite_lists;";
     }
 
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO favourite_list_personal(client_id) VALUES(?);";
+        return "INSERT INTO favourite_lists(client_id) VALUES(?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE favourite_list_personal SET client_id=? WHERE favourite_list_id=?;";
+        return "UPDATE favourite_lists SET client_id=? WHERE favourite_list_id=?;";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM favourite_list_personal WHERE favourite_list_id=?";
+        return "DELETE FROM favourite_lists WHERE favourite_list_id=?";
     }
 
     @Override
@@ -81,7 +80,6 @@ public class MySQLFavouriteListDao extends AbstractDao<FavouriteList,Integer> {
             throw new DaoException(e);
         }
     }
-
 
     @Override
     public FavouriteList create() throws DaoException {

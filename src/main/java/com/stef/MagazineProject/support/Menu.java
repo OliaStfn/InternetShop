@@ -115,7 +115,7 @@ public class Menu {
     private static void doIt(int x) throws DaoException{
         switch (x) {
             case 1:
-                Session.setProduct(Stock.findProduct());
+                Session.setGoods(Stock.findProduct());
                 break;
             case 2:
                 System.out.println(Stock.getInformationAboutProducts());

@@ -5,7 +5,7 @@ import com.stef.MagazineProject.DAO.GenericDao;
 import com.stef.MagazineProject.domain.Client;
 import com.stef.MagazineProject.domain.Employee;
 import com.stef.MagazineProject.domain.Human;
-import com.stef.MagazineProject.domain.Product;
+import com.stef.MagazineProject.domain.Goods;
 import com.stef.MagazineProject.mysql.MySQLDaoFactory;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class Session {
     private static Human human = null;
-    private static Product product=null;
+    private static Goods goods =null;
 
     public static void login() throws DaoException {
         Scanner in = new Scanner(System.in);
@@ -94,11 +94,11 @@ public class Session {
         return human;
     }
 
-    public static Product getProduct() {
-        return product;
+    public static Goods getGoods() {
+        return goods;
     }
 
-    public static void setProduct(Product product) {
-        Session.product = product;
+    public static void setGoods(Goods goods) {
+        Session.goods = goods;
     }
 }
