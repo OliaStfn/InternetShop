@@ -4,6 +4,7 @@ import com.stef.MagazineProject.DAO.DaoException;
 import com.stef.MagazineProject.DAO.DaoFactory;
 import com.stef.MagazineProject.DAO.GenericDao;
 import com.stef.MagazineProject.domain.*;
+import com.stef.MagazineProject.support.OrderStTableMarker;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -87,6 +88,35 @@ public class MySQLDaoFactory implements DaoFactory<Connection> {
             @Override
             public GenericDao create(Connection connection) {
                 return new MySQLFavouriteListDao(connection);
+            }
+        });
+
+        allDao.put(FavouriteListLine.class, new DaoFactory.DaoCreator<Connection>() {
+            @Override
+            public GenericDao create(Connection connection) {
+                return new MySQLFavouriteListLineDao(connection);
+            }
+        });
+
+        allDao.put(Status.class, new DaoFactory.DaoCreator<Connection>() {
+            @Override
+            public GenericDao create(Connection connection) {
+                return new MySQLStatusDao(connection);
+            }
+        });
+
+        allDao.put(OrderLine.class, new DaoFactory.DaoCreator<Connection>() {
+            @Override
+            public GenericDao create(Connection connection) {
+                return new MySQLOrderLineDao(connection);
+
+            }
+        });
+
+        allDao.put(OrderStTableMarker.class, new DaoFactory.DaoCreator<Connection>() {
+            @Override
+            public GenericDao create(Connection connection) {
+                return new MySQLOrderStatusDao(connection);
             }
         });
     }

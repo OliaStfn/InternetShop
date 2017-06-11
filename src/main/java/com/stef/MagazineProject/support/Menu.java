@@ -1,5 +1,6 @@
 package com.stef.MagazineProject.support;
 
+import com.stef.MagazineProject.DAO.DaoCreator;
 import com.stef.MagazineProject.DAO.DaoException;
 import com.stef.MagazineProject.DAO.GenericDao;
 import com.stef.MagazineProject.domain.*;
@@ -9,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
+    public static void main(String[] args) throws DaoException {
+        menu();
+    }
     public static void menu() throws DaoException {
         int x = -1;
         System.out.println("Welcome to the Internet Shop");
@@ -30,7 +34,7 @@ public class Menu {
         if (Session.getHuman() instanceof Client) {
             System.out.println("4- Buy product");
             System.out.println("5- Add product to the basket");
-            System.out.println("6- Add to list favorites");
+            System.out.println("6- Add to favourite list");
 
         } else if (Session.getHuman() instanceof Employee) {
             System.out.println("4- Add product");
@@ -124,15 +128,23 @@ public class Menu {
                 sortMenu();
                 break;
             case 4:
+                if (Session.getHuman() instanceof Client) {
+                    ((Client) Session.getHuman()).addOrder();
+                    ((Client) Session.getHuman()).addGoodsToOrder();
+                } else if (Session.getHuman() instanceof Employee) {
+                    Stock.addProduct();
+                }
                 break;
             case 5:
                 break;
             case 6:
+                if(Session.getHuman() instanceof Client) {
+                    ((Client) Session.getHuman()).addProductToFavouriteList();
+                }
                 break;
             case 0:System.exit(0);
                 break;
-            default:
+            default: break;
         }
     }
-
 }

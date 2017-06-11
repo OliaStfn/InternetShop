@@ -1,5 +1,6 @@
 package com.stef.MagazineProject.support;
 
+import com.stef.MagazineProject.DAO.DaoCreator;
 import com.stef.MagazineProject.DAO.DaoException;
 import com.stef.MagazineProject.DAO.GenericDao;
 import com.stef.MagazineProject.domain.Client;
@@ -19,9 +20,7 @@ public class Session {
         Scanner in = new Scanner(System.in);
         String login;
         String password;
-        MySQLDaoFactory factory = new MySQLDaoFactory();
-        GenericDao dao = factory.getDao(factory.getConnection(), Client.class);
-        ArrayList<Client> clients = dao.readAll();
+        ArrayList<Client> clients = DaoCreator.readClientFromDB();
         System.out.println("Enter your login: ");
         login = in.nextLine();
         System.out.println("Enter your password: ");
@@ -34,7 +33,9 @@ public class Session {
                 } else System.out.println("Incorrect password");
             }
         }
-        System.out.println("Account not found");
+        System.out.println("Account not found. Do you want try again? 1-Yes,0-No");
+        int choise = Integer.parseInt(in.next());
+        if (choise==1) login();
     }
 
     public static void register() throws DaoException {
@@ -62,7 +63,9 @@ public class Session {
                 } else System.out.println("Incorrect password");
             }
         }
-        System.out.println("Account not found");
+        System.out.println("Account not found. Do you want try again? 1-Yes,0-No");
+        int choise = Integer.parseInt(in.next());
+        if (choise==1) loginAdmin();
     }
 
     public static void choice() throws DaoException {
@@ -83,7 +86,7 @@ public class Session {
                 login();
                 break;
             }
-        } while (choice != 0);
+        } while (choice != 0 || human==null);
     }
 
     public static void logOut() throws DaoException {

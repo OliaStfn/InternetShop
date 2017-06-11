@@ -1,5 +1,7 @@
 package com.stef.MagazineProject.domain;
 
+import com.stef.MagazineProject.DAO.DaoCreator;
+import com.stef.MagazineProject.DAO.GenericDao;
 import com.stef.MagazineProject.DAO.Identifacator;
 import org.apache.log4j.Logger;
 
@@ -40,8 +42,9 @@ public class FavouriteList implements Identifacator<Integer> {
         do {
 
             try {
+                GenericDao dao = DaoCreator.createMySqlDao("favorite line");
                 pr = Stock.findProduct();
-                item.add(new FavouriteListLine(pr, id));
+                item.add((FavouriteListLine) dao.createInDB(new FavouriteListLine(pr, id)));
                 log.info("The product was add to favourite list\n" + pr.toString());
                 System.out.println("Add other product?");
                 System.out.println("1-YES / 0-NO :");
@@ -53,7 +56,12 @@ public class FavouriteList implements Identifacator<Integer> {
     }
 
     public void addProduct(Goods goods) {
-        item.add(new FavouriteListLine(goods, id));
+        try {
+            GenericDao dao = DaoCreator.createMySqlDao("favorite line");
+            item.add((FavouriteListLine) dao.createInDB(new FavouriteListLine(goods, id)));
+        } catch (Exception e) {
+            log.error("Error" + e.getMessage());
+        }
     }
 
     public void deleteProduct() {
@@ -87,8 +95,7 @@ public class FavouriteList implements Identifacator<Integer> {
         for (FavouriteListLine line : item) {
             temp += line.toString();
         }
-        return "FavouriteList{" +
-                "Item: " + temp +
-                '}';
+        return "FavouriteList: " +
+                "\n |\tItem: \t\t\t|\t" + temp;
     }
 }

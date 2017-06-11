@@ -20,6 +20,10 @@ public class MySQLStatusDao extends AbstractDao<Status,Integer>{
     }
 
     private class StatusForDB extends Status {
+        public StatusForDB() {
+            super();
+        }
+
         public void setId(int id) {
             super.setStatusId(id);
         }
@@ -106,5 +110,4 @@ public class MySQLStatusDao extends AbstractDao<Status,Integer>{
             }
         return createInDB(tempStatus);
     }
-
 }

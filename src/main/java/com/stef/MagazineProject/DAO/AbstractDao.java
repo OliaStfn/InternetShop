@@ -114,9 +114,6 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
         } catch (Exception e) {
             throw new DaoException();
         }
-        if (someList == null || someList.size() == 0) {
-            throw new DaoException("Database is empty");
-        }
         return someList;
     }
 
@@ -131,4 +128,3 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
         return  new java.sql.Date(gregorianCalendar.getTime().getTime());
     }
 }
-

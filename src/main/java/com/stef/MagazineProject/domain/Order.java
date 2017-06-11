@@ -1,5 +1,6 @@
 package com.stef.MagazineProject.domain;
 
+import com.stef.MagazineProject.DAO.DaoCreator;
 import com.stef.MagazineProject.DAO.DaoException;
 import com.stef.MagazineProject.DAO.GenericDao;
 import com.stef.MagazineProject.DAO.Identifacator;
@@ -51,8 +52,15 @@ public class Order implements Identifacator<Integer>{
         lines.add(new OrderLine(goods,count,orderId));
     }
 
-    public void setStatus(String status) {
-        this.status.setStatus(status);
+    public void addNewLine(OrderLine line){
+        lines.add(line);
+    }
+
+    public void setStatus(String status) throws DaoException {
+        GenericDao dao = DaoCreator.createMySqlDao("status");
+        this.status = (Status) dao.createInDB(new Status(status));
+        dao = DaoCreator.createMySqlDao("status order");
+        dao.createInDB(this);
     }
 
     public void setStatus() throws DaoException {

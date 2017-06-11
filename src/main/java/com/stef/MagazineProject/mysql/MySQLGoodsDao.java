@@ -101,11 +101,14 @@ public class MySQLGoodsDao extends AbstractDao<Goods, Integer> {
         Goods tempGoods = new Goods();
         Scanner in = new Scanner(System.in);
         System.out.println("Enter name of product: ");
-        tempGoods.setName(in.nextLine());
+        String name=in.nextLine();
+        tempGoods.setName(name);
         System.out.println("Enter price of product: ");
-        tempGoods.setPrice(in.nextDouble());
+        double price=in.nextDouble();
+        tempGoods.setPrice(price);
         System.out.println("Enter vendor of product: ");
-        tempGoods.setVendor(in.nextLine());
+        String vendor = in.next();
+        tempGoods.setVendor(vendor);
         System.out.println("Enter production year of product: ");
         int year = in.nextInt();
         System.out.println("Enter production month of product: ");

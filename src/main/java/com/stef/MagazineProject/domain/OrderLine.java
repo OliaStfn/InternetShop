@@ -4,7 +4,6 @@ import com.stef.MagazineProject.DAO.Identifacator;
 
 public class OrderLine implements Identifacator<Integer>{
     private int orderId;
-    private int orderLineId;
     private Goods goods;
     private int count;
     private double price;
@@ -40,14 +39,6 @@ public class OrderLine implements Identifacator<Integer>{
         this.orderId = orderId;
     }
 
-    public int getId() {
-        return orderLineId;
-    }
-
-    public void setId(int orderLineId) {
-        this.orderLineId = orderLineId;
-    }
-
     public int getCount() {
         return count;
     }
@@ -60,7 +51,21 @@ public class OrderLine implements Identifacator<Integer>{
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderLine: " +
+                "\n |\tOrderId:  \t\t\t|\t" + orderId +
+                "\n |\tGoods:  \t\t\t|\t" + goods.toString() +
+                "\n |\tCount:  \t\t\t|\t" + count +
+                "\n |\tPrice:  \t\t\t|\t" + price;
     }
 }

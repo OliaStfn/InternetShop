@@ -12,6 +12,13 @@ import static org.junit.Assert.*;
 
 public class MySQLGoodsDaoTest {
     @Test
+    public void create() throws Exception {
+        MySQLDaoFactory factory = new MySQLDaoFactory();
+        GenericDao dao = factory.getDao(factory.getConnection(), Goods.class);
+        Goods goods = (Goods) dao.create();
+    }
+
+    @Test
     public void createInDB() throws Exception {
         Goods goods = new Goods("salat Caesar", 30.0, "pizza+", new GregorianCalendar(),
                 new GregorianCalendar(2018, 6, 5));

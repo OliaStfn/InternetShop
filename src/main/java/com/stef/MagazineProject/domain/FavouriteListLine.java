@@ -24,4 +24,10 @@ public class FavouriteListLine implements Identifacator<Integer>{
         return favoriteListId;
     }
 
+    @Override
+    public String toString() {
+        return "FavouriteListLine: " +
+                "\n |\tGoods: \t\t\t|\t" + goods.toString() +
+                "\n |\tFavoriteListId: \t\t\t|\t" + favoriteListId;
+    }
 }

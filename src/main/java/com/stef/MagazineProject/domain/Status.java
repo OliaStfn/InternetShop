@@ -6,6 +6,13 @@ public class Status implements Identifacator<Integer> {
     private String status;
     private int statusId;
 
+    public Status() {
+    }
+
+    public Status(String status) {
+        this.status = status;
+    }
+
     protected void setStatusId(int statusId) {
         this.statusId = statusId;
     }
@@ -21,5 +28,12 @@ public class Status implements Identifacator<Integer> {
     @Override
     public int getId() {
         return statusId;
+    }
+
+    @Override
+    public String toString() {
+        return "Status: " +
+                "\n |\tStatus: \t\t\t|\t" + status +
+                "\n |\tStatusId: \t\t\t|\t" + statusId;
     }
 }

@@ -25,7 +25,7 @@ public class MySQLOrderStatusDao extends AbstractDao<Order, Integer> {
     @Override
     public String getCreateQuery() {
         return "INSERT INTO order_status (order_id,status_id,order_status_date) " +
-                "VALUES ((SELECT LAST_INSERT_ID() FROM orders)," +
+                "VALUES ((SELECT LAST_INSERT_ID())," +
                 "(SELECT status_id FROM status WHERE status=?),NOW());";
     }
 

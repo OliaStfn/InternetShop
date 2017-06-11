@@ -10,5 +10,4 @@ public interface GenericDao<T, PK extends Serializable> {
     public void update(T obj)throws DaoException;
     public void delete(T obj)throws DaoException;
     public ArrayList<T> readAll()throws DaoException;
-
 }

@@ -1,4 +1,6 @@
-package com.stef.MagazineProject.domain;
+package com.stef.MagazineProject.support;
+
+import com.stef.MagazineProject.domain.Goods;
 
 import java.util.ArrayList;
 import java.util.Scanner;

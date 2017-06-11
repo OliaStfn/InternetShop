@@ -2,6 +2,7 @@ package com.stef.MagazineProject.mysql;
 
 
 import com.stef.MagazineProject.DAO.AbstractDao;
+import com.stef.MagazineProject.DAO.DaoCreator;
 import com.stef.MagazineProject.DAO.DaoException;
 import com.stef.MagazineProject.DAO.GenericDao;
 import com.stef.MagazineProject.domain.Client;
@@ -21,6 +22,9 @@ public class MySQLClientDao extends AbstractDao<Client, Integer> {
     }
 
     private class ClientForDB extends Client {
+        public ClientForDB() throws DaoException {
+        }
+
         public void setId(int id) {
             super.setId(id);
         }
@@ -112,8 +116,6 @@ public class MySQLClientDao extends AbstractDao<Client, Integer> {
     @Override
     public Client create() throws DaoException {
         boolean temp=false;
-        MySQLDaoFactory factory = new MySQLDaoFactory();
-        GenericDao dao = factory.getDao(factory.getConnection(), Client.class);
         Client tempClient = new Client();
         Scanner in = new Scanner(System.in);
         System.out.println("Enter name: ");
@@ -134,7 +136,7 @@ public class MySQLClientDao extends AbstractDao<Client, Integer> {
         do {
             System.out.println("Enter your login: ");
             tempClient.setLogin(in.nextLine());
-            ArrayList<Client>clients=dao.readAll();
+            ArrayList<Client>clients=DaoCreator.readClientFromDB();
             for(Client client: clients){
                 if(tempClient.getLogin().equals(client.getLogin())){
                     System.out.println("Username is exist");
@@ -148,5 +150,4 @@ public class MySQLClientDao extends AbstractDao<Client, Integer> {
 
         return createInDB(tempClient);
     }
-
 }

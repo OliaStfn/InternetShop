@@ -4,6 +4,7 @@ import com.stef.MagazineProject.DAO.AbstractDao;
 import com.stef.MagazineProject.DAO.DaoException;
 import com.stef.MagazineProject.DAO.GenericDao;
 import com.stef.MagazineProject.domain.FavouriteList;
+import com.stef.MagazineProject.domain.Goods;
 import org.apache.commons.lang.NotImplementedException;
 
 import java.sql.Connection;
@@ -20,6 +21,12 @@ public class MySQLFavouriteListDao extends AbstractDao<FavouriteList,Integer> {
         super(connection);
     }
 
+    private class GoodsForDB extends Goods {
+        public void setId(int id) {
+            super.setId(id);
+        }
+    }
+
     @Override
     public String getSelectQuery() {
         return "SELECT * FROM favourite_lists WHERE favourite_list_id=";
@@ -27,9 +34,12 @@ public class MySQLFavouriteListDao extends AbstractDao<FavouriteList,Integer> {
 
     @Override
     public String getSelectAllQuery() {
-        return "SELECT * FROM favourite_lists;";
+        return "SELECT f.*,g.* FROM favourite_lists f " +
+                "NATURAL JOIN goods g" +
+                "NATURAL JOIN favourite_list_goods fg" +
+                "WHERE f.favourite_list_id=fg.favourite_list_id" +
+                "AND g.goods_id=fg.goods_id;";
     }
-
 
     @Override
     public String getCreateQuery() {
@@ -52,9 +62,22 @@ public class MySQLFavouriteListDao extends AbstractDao<FavouriteList,Integer> {
         try {
             while (resultSet.next()) {
                 FavouriteList favouriteList = new FavouriteList();
-                favouriteList.setId(resultSet.getInt("favourite_list_id"));
-                favouriteList.setClientId(resultSet.getInt("client_id"));
-                clients.add(favouriteList);
+                GoodsForDB item = new GoodsForDB();
+                favouriteList.setId(resultSet.getInt("favourite_lists.favourite_list_id"));
+                favouriteList.setClientId(resultSet.getInt("favourite_lists.client_id"));
+                item.setId(resultSet.getInt("goods.goods_id"));
+                item.setName(resultSet.getString("goods.goods_name"));
+                item.setPrice(resultSet.getDouble("goods.goods_price"));
+                item.setVendor(resultSet.getString("goods.goods_vendor"));
+                item.setProductionDate(convertToGD(resultSet.getDate("goods.goods_production_date")));
+                item.setExpDate(convertToGD(resultSet.getDate("goods.goods_expiration_date")));
+                if (favouriteList.getId()==clients.get(clients.size()-1).getId()){
+                    clients.get(clients.size()-1).addProduct(item);
+                }
+                else {
+                    favouriteList.addProduct();
+                    clients.add(favouriteList);
+                }
             }
         } catch (Exception e) {
             throw new DaoException(e);
