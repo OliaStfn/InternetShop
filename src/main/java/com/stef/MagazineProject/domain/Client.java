@@ -5,7 +5,6 @@ import com.stef.MagazineProject.DAO.DaoException;
 import com.stef.MagazineProject.DAO.GenericDao;
 import com.stef.MagazineProject.DAO.Identifacator;
 import com.stef.MagazineProject.support.ISort;
-import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -21,7 +20,7 @@ public class Client extends Human implements Identifacator<Integer>, ISort {
     private ArrayList<Order> orders;
 
     public Client() {
-        list = new FavouriteList();
+        list =null;
         setName("name");
         setSurname("surname");
         setBornDate(new GregorianCalendar(1990, 01, 01));
@@ -32,7 +31,7 @@ public class Client extends Human implements Identifacator<Integer>, ISort {
     public Client(String name, String surname,
                   int year, int month, int day,
                   String phoneNumber, String address) {
-        list = new FavouriteList();
+        list =null;
         setName(name);
         setSurname(surname);
         setBornDate(new GregorianCalendar(year, month, day));
@@ -80,7 +79,11 @@ public class Client extends Human implements Identifacator<Integer>, ISort {
         this.id = id;
     }
 
-    public void addProductToFavouriteList() {
+    public void addProductToFavouriteList() throws DaoException {
+        if (list == null){
+            GenericDao dao = DaoCreator.createMySqlDao("favorite list");
+            list = (FavouriteList) dao.createInDB(new FavouriteList());
+        }
         list.addProduct();
     }
 

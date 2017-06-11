@@ -18,7 +18,7 @@ public class Stock {
     public static void addProduct() {
         try {
             GenericDao dao = DaoCreator.createMySqlDao("goods");
-            dao.create();
+            goods.add((Goods) dao.create());
         } catch (Exception e) {
             log.info(e.getMessage());
         }
@@ -32,12 +32,12 @@ public class Stock {
             for (Goods goods : goods) {
                 System.out.println(goods.toString());
             }
-            System.out.print("Chose product by ID: ");
+            System.out.print("Chose item by name: ");
             Scanner in = new Scanner(System.in);
-            int inputID = Integer.parseInt(in.next());
+            String inputName = in.next();
 
             for (Goods goods : goods) {
-                if(goods.getId()==inputID) return goods;
+                if(goods.getName()==inputName) return goods;
             }
             return null;
         } catch (NumberFormatException e) {
@@ -50,7 +50,7 @@ public class Stock {
     }
 
 
-    public static StringBuilder getInformationAboutProducts() {
+    public static StringBuilder getInformationAboutProducts() throws DaoException {
         StringBuilder temp = new StringBuilder("");
         for (Goods goods : Stock.goods) {
             temp.append(goods.toString());
