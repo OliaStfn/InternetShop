@@ -25,10 +25,9 @@ public class DaoCreator {
             return factory.getDao(factory.getConnection(), Status.class);
         else if (nameDao.toLowerCase().equalsIgnoreCase("favorite"))
             return factory.getDao(factory.getConnection(), FavouriteList.class);
-        else if(nameDao.toLowerCase().equalsIgnoreCase("favorite")&&
-                nameDao.toLowerCase().equalsIgnoreCase("line"))
+        else if (nameDao.toLowerCase().equalsIgnoreCase("favorite list"))
             return factory.getDao(factory.getConnection(), FavouriteListLine.class);
-        else if(nameDao.toLowerCase().equalsIgnoreCase("order")&&
+        else if (nameDao.toLowerCase().equalsIgnoreCase("order") &&
                 nameDao.toLowerCase().equalsIgnoreCase("status"))
             return factory.getDao(factory.getConnection(), OrderStTableMarker.class);
         else
@@ -40,7 +39,7 @@ public class DaoCreator {
         GenericDao dao = createMySqlDao("client");
         ArrayList<Client> clients = dao.readAll();
         dao = createMySqlDao("order");
-        for (Client client: clients){
+        for (Client client : clients) {
             client.setOrders(dao.readAll());
         }
         return clients;

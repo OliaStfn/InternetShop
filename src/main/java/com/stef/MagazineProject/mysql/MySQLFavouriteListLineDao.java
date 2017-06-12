@@ -19,7 +19,7 @@ public class MySQLFavouriteListLineDao extends AbstractDao<FavouriteListLine,Int
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO orders_goods(favourite_list_id,goods_id) VALUES(?,?,?,?);";
+        return "INSERT INTO favourite_list_goods(favourite_list_id,goods_id) VALUES(?,?);";
     }
 
     @Override

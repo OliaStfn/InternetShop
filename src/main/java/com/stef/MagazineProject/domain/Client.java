@@ -80,11 +80,13 @@ public class Client extends Human implements Identifacator<Integer>, ISort {
     }
 
     public void addProductToFavouriteList() throws DaoException {
+
+        list.addProduct();
         if (list == null){
             GenericDao dao = DaoCreator.createMySqlDao("favorite list");
             list = (FavouriteList) dao.createInDB(new FavouriteList());
         }
-        list.addProduct();
+
     }
 
     public void deleteProductFromFavouriteList() {
