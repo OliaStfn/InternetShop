@@ -58,31 +58,32 @@ public class MySQLFavouriteListDao extends AbstractDao<FavouriteList,Integer> {
 
     @Override
     public ArrayList<FavouriteList> parseResultSet(ResultSet resultSet) throws DaoException {
-        ArrayList<FavouriteList> clients = new ArrayList<FavouriteList>();
+        ArrayList<FavouriteList> lists = new ArrayList<FavouriteList>();
         try {
             while (resultSet.next()) {
                 FavouriteList favouriteList = new FavouriteList();
-                GoodsForDB item = new GoodsForDB();
+                //GoodsForDB item = new GoodsForDB();
                 favouriteList.setId(resultSet.getInt("favourite_lists.favourite_list_id"));
                 favouriteList.setClientId(resultSet.getInt("favourite_lists.client_id"));
-                item.setId(resultSet.getInt("goods.goods_id"));
+                /*item.setId(resultSet.getInt("goods.goods_id"));
                 item.setName(resultSet.getString("goods.goods_name"));
                 item.setPrice(resultSet.getDouble("goods.goods_price"));
                 item.setVendor(resultSet.getString("goods.goods_vendor"));
                 item.setProductionDate(convertToGD(resultSet.getDate("goods.goods_production_date")));
                 item.setExpDate(convertToGD(resultSet.getDate("goods.goods_expiration_date")));
-                if (favouriteList.getId()==clients.get(clients.size()-1).getId()){
-                    clients.get(clients.size()-1).addProduct(item);
+                if (favouriteList.getId()==lists.get(lists.size()-1).getId()){
+                    lists.get(lists.size()-1).addProduct(item);
                 }
                 else {
                     favouriteList.addProduct();
-                    clients.add(favouriteList);
-                }
+                    lists.add(favouriteList);
+                }*/
+                lists.add(favouriteList);
             }
         } catch (Exception e) {
             throw new DaoException(e);
         }
-        return clients;
+        return lists;
     }
 
     @Override

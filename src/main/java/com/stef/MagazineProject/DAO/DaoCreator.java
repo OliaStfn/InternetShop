@@ -16,19 +16,17 @@ public class DaoCreator {
             return factory.getDao(factory.getConnection(), Client.class);
         else if (nameDao.toLowerCase().equalsIgnoreCase("employee"))
             return factory.getDao(factory.getConnection(), Employee.class);
-        else if (nameDao.toLowerCase().equalsIgnoreCase("order") &&
-                nameDao.toLowerCase().equalsIgnoreCase("line"))
+        else if (nameDao.toLowerCase().equalsIgnoreCase("order line"))
             return factory.getDao(factory.getConnection(), OrderLine.class);
         else if (nameDao.toLowerCase().equalsIgnoreCase("order"))
             return factory.getDao(factory.getConnection(), Order.class);
         else if (nameDao.toLowerCase().equalsIgnoreCase("status"))
             return factory.getDao(factory.getConnection(), Status.class);
+        else if (nameDao.toLowerCase().equalsIgnoreCase("favorite line"))
+            return factory.getDao(factory.getConnection(), FavouriteListLine.class);
         else if (nameDao.toLowerCase().equalsIgnoreCase("favorite"))
             return factory.getDao(factory.getConnection(), FavouriteList.class);
-        else if (nameDao.toLowerCase().equalsIgnoreCase("favorite list"))
-            return factory.getDao(factory.getConnection(), FavouriteListLine.class);
-        else if (nameDao.toLowerCase().equalsIgnoreCase("order") &&
-                nameDao.toLowerCase().equalsIgnoreCase("status"))
+        else if (nameDao.toLowerCase().equalsIgnoreCase("order status"))
             return factory.getDao(factory.getConnection(), OrderStTableMarker.class);
         else
             System.out.println("Not found same class");

@@ -21,7 +21,8 @@ public class Menu {
 
     public static void menu() throws DaoException {
         int x = -1;
-        System.out.println("Welcome to the Internet Shop");
+        String tabulation = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+        System.out.println(tabulation+"\nWelcome to the Internet Shop\n"+tabulation);
         Session.choice();
         do {
             printMenu();
@@ -129,13 +130,18 @@ public class Menu {
         dao = DaoCreator.createMySqlDao("goods");
         Stock.setGoods(dao.readAll());
         int temp = -1;
+        String tabulation = "\n________________________________________________";
         do {
-            System.out.println("You can: \n 1- Sort product by name\n" +
-                    " 2- Sort product by price\n 3- Sort employee by full name\n");
+            System.out.println("\nYou can: "+tabulation);
+            System.out.println("1- Sort product by name");
+            System.out.println("2- Sort product by price");
+            System.out.println("3- Sort employee by full name");
+
             if (Session.getHuman() instanceof Employee) {
-                System.out.println(" 4- Sort employee by salary\n 5- Sort client by full name");
+                System.out.println("4- Sort employee by salary");
+                System.out.println("5- Sort client by full name");
             }
-            System.out.println(" 0- Exit");
+            System.out.println("0- Exit"+tabulation);
 
             System.out.println("Enter you choice: ");
             temp = Integer.parseInt(in.next());

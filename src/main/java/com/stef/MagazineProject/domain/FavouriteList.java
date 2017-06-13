@@ -18,6 +18,11 @@ public class FavouriteList implements Identifacator<Integer> {
         item = new ArrayList<FavouriteListLine>();
     }
 
+    public FavouriteList(int clientId) {
+        item = new ArrayList<FavouriteListLine>();
+        this.clientId=clientId;
+    }
+
     @Override
     public int getId() {
         return id;
@@ -40,7 +45,6 @@ public class FavouriteList implements Identifacator<Integer> {
         int repeat = -1;
         Goods pr = null;
         do {
-
             try {
                 GenericDao dao = DaoCreator.createMySqlDao("favorite line");
                 pr = Stock.findProduct();
@@ -51,6 +55,7 @@ public class FavouriteList implements Identifacator<Integer> {
                 repeat = Integer.parseInt(in.next());
             } catch (Exception e) {
                 log.error("Error" + e.getMessage());
+                System.out.println("The product isn`t added to favourite list");
             }
         } while (repeat != 0);
     }

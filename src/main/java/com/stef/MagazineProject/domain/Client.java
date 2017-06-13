@@ -20,7 +20,7 @@ public class Client extends Human implements Identifacator<Integer>, ISort {
     private ArrayList<Order> orders;
 
     public Client() {
-        list =null;
+        list = null;
         setName("name");
         setSurname("surname");
         setBornDate(new GregorianCalendar(1990, 01, 01));
@@ -31,7 +31,7 @@ public class Client extends Human implements Identifacator<Integer>, ISort {
     public Client(String name, String surname,
                   int year, int month, int day,
                   String phoneNumber, String address) {
-        list =null;
+        list = null;
         setName(name);
         setSurname(surname);
         setBornDate(new GregorianCalendar(year, month, day));
@@ -80,13 +80,12 @@ public class Client extends Human implements Identifacator<Integer>, ISort {
     }
 
     public void addProductToFavouriteList() throws DaoException {
-
-        list.addProduct();
-        if (list == null){
-            GenericDao dao = DaoCreator.createMySqlDao("favorite list");
-            list = (FavouriteList) dao.createInDB(new FavouriteList());
+        GenericDao dao = DaoCreator.createMySqlDao("favorite");
+        list = (FavouriteList) dao.read(id);
+        if (list == null) {
+            list = (FavouriteList) dao.createInDB(new FavouriteList(id));
         }
-
+        list.addProduct();
     }
 
     public void deleteProductFromFavouriteList() {
@@ -106,13 +105,13 @@ public class Client extends Human implements Identifacator<Integer>, ISort {
         orders.add((Order) dao.createInDB(new Order(id)));
     }
 
-    public void addGoodsToOrder(){
+    public void addGoodsToOrder() {
         Goods goods = Stock.findProduct();
-        Scanner in= new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
         int quantity;
         System.out.println("How much product you want to buy?");
-        quantity=Integer.parseInt(in.next());
-        orders.get(orders.size()-1).addNewLine(quantity,goods);
+        quantity = Integer.parseInt(in.next());
+        orders.get(orders.size() - 1).addNewLine(quantity, goods);
     }
 
     public void deleteOrder() throws DaoException {

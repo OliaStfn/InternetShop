@@ -1,14 +1,16 @@
 package com.stef.MagazineProject.DAO;
 
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Integer> implements GenericDao<T, PK> {
     private Connection connection;
+    private static final Logger log = Logger.getLogger(AbstractDao.class);
 
     public AbstractDao(Connection connection) {
         this.connection = connection;
@@ -71,7 +73,8 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
             throw new DaoException();
         }
         if (someList == null || someList.size() == 0) {
-            throw new DaoException("Record with id=" + key + " not found in database");
+            log.error("Record with id=" + key + " not found in database");
+            return null;
         }
         if (someList.size() > 1) {
             throw new DaoException("Found more than one record with id=" + key);

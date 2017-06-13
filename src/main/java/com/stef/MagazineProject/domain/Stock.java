@@ -29,24 +29,26 @@ public class Stock {
             GenericDao dao = DaoCreator.createMySqlDao("goods");
             goods = dao.readAll();
 
-            for (Goods goods : goods) {
-                System.out.println(goods.toString());
+            for (Goods good : goods) {
+                System.out.println(good.toString());
             }
             System.out.print("Chose item by name: ");
             Scanner in = new Scanner(System.in);
-            String inputName = in.next();
+            String inputName = in.nextLine();
 
-            for (Goods goods : goods) {
-                if(goods.getName()==inputName) return goods;
+            for (int i=0;i<goods.size();i++) {
+                if (goods.get(i).getName().equalsIgnoreCase(inputName)) {
+                    return goods.get(i);
+                }
             }
-            return null;
-        } catch (NumberFormatException e) {
-            log.info(e.getMessage());
-            return null;
         } catch (DaoException e) {
             log.info(e.getMessage());
             return null;
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            return null;
         }
+        return null;
     }
 
 

@@ -34,8 +34,8 @@ public class Session {
             }
         }
         System.out.println("Account not found. Do you want try again? 1-Yes,0-No");
-        int choise = Integer.parseInt(in.next());
-        if (choise == 1) login();
+        int choice = Integer.parseInt(in.next());
+        if (choice == 1) login();
     }
 
     public static void register() throws DaoException {
@@ -67,7 +67,7 @@ public class Session {
                 }
             }
             if(human == null){
-                System.out.print("\nAccount not found. Do you want try again? 1-Yes,0-No");
+                System.out.print("\nAccount not found. Do you want to try again? 1-Yes,0-No");
                 choice = Integer.parseInt(in.next());
             }else{
                 choice = 0;
@@ -80,12 +80,13 @@ public class Session {
     public static void choice() throws DaoException {
         Scanner in = new Scanner(System.in);
         int choice = -1;
+        String tabulation = "\n________________________________________________";
         do {
-            System.out.println("\nWhat do you want?");
+            System.out.println("\nWhat do you want?"+tabulation);
             System.out.println("1-Register user`s account");
             System.out.println("2-Login as administrator");
-            System.out.println("3-Login as user");
-            System.out.print("\nEnter your choice:");
+            System.out.println("3-Login as user"+tabulation);
+            System.out.print("\nEnter your choice: ");
             choice = Integer.parseInt(in.next());
             switch (choice) {
                 case 1:
