@@ -43,6 +43,7 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
             if (changedFields != 1)
                 throw new DaoException("During creating,created more than 1 object: " + changedFields);
         } catch (Exception e) {
+            log.error(e);
             throw new DaoException();
         }
         query = getSelectQuery()+"(SELECT last_insert_id());";
@@ -55,6 +56,7 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
             tempObj = someList.iterator().next();
 
         } catch (Exception e) {
+            log.error(e);
             throw new DaoException();
         }
 
@@ -70,6 +72,7 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
             someList = parseResultSet(resultSet);
 
         } catch (Exception e) {
+            log.error(e+"Error with read database");
             throw new DaoException();
         }
         if (someList == null || someList.size() == 0) {
@@ -91,6 +94,7 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
             if (changedFields != 1) throw new DaoException("During update more than 1 field");
             statement.close();
         } catch (Exception e) {
+            log.error(e);
             throw new DaoException();
         }
     }
@@ -103,6 +107,7 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
             int changedFields = statement.executeUpdate();
             if (changedFields != 1) throw new DaoException("During query deleted more than 1 field: " + changedFields);
         } catch (Exception e) {
+            log.error(e);
             throw new DaoException();
         }
     }
@@ -115,6 +120,7 @@ public abstract class AbstractDao<T extends Identifacator<PK>, PK extends Intege
             ResultSet resultSet = statement.executeQuery();
             someList = parseResultSet(resultSet);
         } catch (Exception e) {
+            log.error(e+"Error with read databases");
             throw new DaoException();
         }
         return someList;

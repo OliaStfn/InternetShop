@@ -64,7 +64,7 @@ public class MySQLOrderStatusDao extends AbstractDao<Order, Integer> {
         try {
             statement.setString(1, obj.getStatus());
         } catch (SQLException e) {
-            throw new DaoException();
+            throw new DaoException(e+"error with statement insert");
         }
     }
 }

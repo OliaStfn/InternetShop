@@ -63,7 +63,7 @@ public class MySQLGoodsDao extends AbstractDao<Goods, Integer> {
                 goods.add(item);
             }
         } catch (Exception e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with pars result set");
         }
         return goods;
     }
@@ -78,7 +78,7 @@ public class MySQLGoodsDao extends AbstractDao<Goods, Integer> {
             statement.setDate(5,convertToDate(obj.getExpDate()));
             statement.setInt(6, obj.getId());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement update");
         }
     }
 
@@ -91,7 +91,7 @@ public class MySQLGoodsDao extends AbstractDao<Goods, Integer> {
             statement.setDate(4, convertToDate(obj.getProductionDate()));
             statement.setDate(5,convertToDate(obj.getExpDate()));
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement insert");
         }
     }
 
@@ -104,7 +104,7 @@ public class MySQLGoodsDao extends AbstractDao<Goods, Integer> {
         String name=in.nextLine();
         tempGoods.setName(name);
         System.out.print("Enter price of product: ");
-        double price=in.nextDouble();
+        double price=Double.parseDouble(in.nextLine());
         tempGoods.setPrice(price);
         System.out.print("Enter vendor of product: ");
         String vendor = in.nextLine();

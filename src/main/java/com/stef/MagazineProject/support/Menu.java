@@ -9,6 +9,7 @@ import com.stef.MagazineProject.domain.Stock;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
 import java.util.Scanner;
 
 public class Menu {
@@ -22,7 +23,7 @@ public class Menu {
     public static void menu() throws DaoException {
         int x = -1;
         String tabulation = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
-        System.out.println(tabulation+"\nWelcome to the Internet Shop\n"+tabulation);
+        System.out.println(tabulation + "\nWelcome to the Internet Shop\n" + tabulation);
         Session.choice();
         do {
             printMenu();
@@ -38,10 +39,13 @@ public class Menu {
 
         if (Session.getHuman() instanceof Client) {
             System.out.println("4- Buy products");
-            System.out.println("5- Add to favourite list");
+            System.out.println("5- Add product to favourite list");
+            System.out.println("6- Display information about product from favourite list");
+            System.out.println("7-Add employee evaluate");
 
         } else if (Session.getHuman() instanceof Employee) {
             System.out.println("4- Add product");
+            System.out.println("5- Add new employee");
         }
         System.out.println("0- Log out");
     }
@@ -52,12 +56,12 @@ public class Menu {
         do {
             System.out.print("\nEnter your choice: ");
             temp = Integer.parseInt(in.next());
-        } while (temp < 0 || temp >= 7);
+        } while (temp < 0 || temp >= 8);
 
         return temp;
     }
 
-    private static void doIt(int x) {
+    private static void doIt(int x) throws DaoException {
         switch (x) {
             case 1:
                 try {
@@ -111,10 +115,51 @@ public class Menu {
                     } catch (Exception e) {
                         log.error("Error with add item to favourite list " + e.getMessage());
                     }
+                } else if (Session.getHuman() instanceof Employee) {
+                    try {
+                        GenericDao dao = DaoCreator.createMySqlDao("employee");
+                        dao.create();
+                    } catch (Exception e) {
+                        log.error("Error with add item to DB" + e.getMessage());
+                    }
+                }
+                break;
+            case 6:
+                if (Session.getHuman() instanceof Client) {
+                    try {
+                        ((Client) Session.getHuman()).showInformation();
+                    } catch (Exception e) {
+                        log.error("Error with display item from favourite list " + e.getMessage());
+                    }
+                }
+                break;
+            case 7:
+                if (Session.getHuman() instanceof Client) {
+                    try {
+                        GenericDao dao = DaoCreator.createMySqlDao("employee");
+                        in = new Scanner(System.in);
+                        ArrayList<Employee> employees = dao.readAll();
+
+                        for (Employee employee : employees) {
+                            System.out.println(employee.toString() + "\n");
+                        }
+                        System.out.print("Enter name and surname employee which you want to evaluate: ");
+                        String name = in.next();
+                        String surname = in.next();
+                        for (Employee employee : employees) {
+                            if (employee.getName().toLowerCase().equals(name.toLowerCase())
+                                    && employee.getSurname().toLowerCase().equals(surname.toLowerCase())){
+                                employee.addMark();
+                                break;
+                            }
+                        }
+                    } catch (Exception e) {
+                        log.error("Error with Evaluate employee " + e.getMessage());
+                    }
                 }
                 break;
             case 0:
-                System.exit(0);
+                Session.logOut();
                 break;
             default:
                 break;
@@ -132,7 +177,7 @@ public class Menu {
         int temp = -1;
         String tabulation = "\n________________________________________________";
         do {
-            System.out.println("\nYou can: "+tabulation);
+            System.out.println("\nYou can: " + tabulation);
             System.out.println("1- Sort product by name");
             System.out.println("2- Sort product by price");
             System.out.println("3- Sort employee by full name");
@@ -141,7 +186,7 @@ public class Menu {
                 System.out.println("4- Sort employee by salary");
                 System.out.println("5- Sort client by full name");
             }
-            System.out.println("0- Exit"+tabulation);
+            System.out.println("0- Exit" + tabulation);
 
             System.out.println("Enter you choice: ");
             temp = Integer.parseInt(in.next());

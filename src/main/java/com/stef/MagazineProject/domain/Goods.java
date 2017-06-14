@@ -87,7 +87,7 @@ public class Goods implements Identifacator<Integer>,ISort {
                 "." + getProductionDate().get(GregorianCalendar.YEAR) +
                 "\n |\t Expiration Date: \t|\t" + getExpDate().get(GregorianCalendar.DATE) +
                 "." + getExpDate().get(GregorianCalendar.MONTH) +
-                "." + getExpDate().get(GregorianCalendar.YEAR);
+                "." + getExpDate().get(GregorianCalendar.YEAR)+"\n";
     }
 
     @Override

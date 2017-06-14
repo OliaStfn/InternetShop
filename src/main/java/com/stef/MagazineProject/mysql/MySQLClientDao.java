@@ -76,7 +76,7 @@ public class MySQLClientDao extends AbstractDao<Client, Integer> {
                 clients.add(client);
             }
         } catch (Exception e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with pars result set");
         }
         return clients;
     }
@@ -93,7 +93,7 @@ public class MySQLClientDao extends AbstractDao<Client, Integer> {
             statement.setString(7,obj.getPassword());
             statement.setInt(8, obj.getId());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement update");
         }
     }
 
@@ -108,7 +108,7 @@ public class MySQLClientDao extends AbstractDao<Client, Integer> {
             statement.setString(6,obj.getLogin());
             statement.setString(7,obj.getPassword());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement insert");
         }
     }
 

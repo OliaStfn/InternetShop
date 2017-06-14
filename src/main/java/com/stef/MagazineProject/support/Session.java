@@ -21,9 +21,9 @@ public class Session {
         String login;
         String password;
         ArrayList<Client> clients = DaoCreator.readClientFromDB();
-        System.out.println("Enter your login: ");
+        System.out.print("Enter your login: ");
         login = in.nextLine();
-        System.out.println("Enter your password: ");
+        System.out.print("Enter your password: ");
         password = in.nextLine();
         for (Client client : clients) {
             if (client.getLogin().equals(login)) {
@@ -85,7 +85,8 @@ public class Session {
             System.out.println("\nWhat do you want?"+tabulation);
             System.out.println("1-Register user`s account");
             System.out.println("2-Login as administrator");
-            System.out.println("3-Login as user"+tabulation);
+            System.out.println("3-Login as user");
+            System.out.println("0-Exit"+tabulation);
             System.out.print("\nEnter your choice: ");
             choice = Integer.parseInt(in.next());
             switch (choice) {
@@ -98,12 +99,16 @@ public class Session {
                 case 3:
                     login();
                     break;
+                case 0:System.exit(0);
+                break;
+                default: break;
             }
         } while (human == null);
     }
 
     public static void logOut() throws DaoException {
         human = null;
+        Menu.menu();
     }
 
     public static Human getHuman() {

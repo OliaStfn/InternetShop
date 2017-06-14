@@ -62,26 +62,26 @@ public class MySQLFavouriteListDao extends AbstractDao<FavouriteList,Integer> {
         try {
             while (resultSet.next()) {
                 FavouriteList favouriteList = new FavouriteList();
-                //GoodsForDB item = new GoodsForDB();
-                favouriteList.setId(resultSet.getInt("favourite_lists.favourite_list_id"));
-                favouriteList.setClientId(resultSet.getInt("favourite_lists.client_id"));
-                /*item.setId(resultSet.getInt("goods.goods_id"));
-                item.setName(resultSet.getString("goods.goods_name"));
-                item.setPrice(resultSet.getDouble("goods.goods_price"));
-                item.setVendor(resultSet.getString("goods.goods_vendor"));
-                item.setProductionDate(convertToGD(resultSet.getDate("goods.goods_production_date")));
-                item.setExpDate(convertToGD(resultSet.getDate("goods.goods_expiration_date")));
+                GoodsForDB item = new GoodsForDB();
+                favouriteList.setId(resultSet.getInt("favourite_list_id"));
+                favouriteList.setClientId(resultSet.getInt("client_id"));
+                item.setId(resultSet.getInt("goods_id"));
+                item.setName(resultSet.getString("goods_name"));
+                item.setPrice(resultSet.getDouble("goods_price"));
+                item.setVendor(resultSet.getString("goods_vendor"));
+                item.setProductionDate(convertToGD(resultSet.getDate("goods_production_date")));
+                item.setExpDate(convertToGD(resultSet.getDate("goods_expiration_date")));
                 if (favouriteList.getId()==lists.get(lists.size()-1).getId()){
                     lists.get(lists.size()-1).addProduct(item);
                 }
                 else {
                     favouriteList.addProduct();
                     lists.add(favouriteList);
-                }*/
+                }
                 lists.add(favouriteList);
             }
         } catch (Exception e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with pars result set");
         }
         return lists;
     }
@@ -92,7 +92,7 @@ public class MySQLFavouriteListDao extends AbstractDao<FavouriteList,Integer> {
             statement.setInt(1, obj.getClientId());
             statement.setInt(2, obj.getId());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement update");
         }
     }
 
@@ -101,7 +101,7 @@ public class MySQLFavouriteListDao extends AbstractDao<FavouriteList,Integer> {
         try {
             statement.setInt(1, obj.getClientId());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement insert");
         }
     }
 

@@ -76,7 +76,7 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
                 employees.add(employee);
             }
         } catch (Exception e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with pars result set");
         }
         return employees;
     }
@@ -96,7 +96,7 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
             statement.setString(10,obj.getPassword());
             statement.setInt(11, obj.getId());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement update");
         }
     }
 
@@ -114,7 +114,7 @@ public class MySQLEmployeeDao extends AbstractDao<Employee, Integer> {
             statement.setString(9,obj.getLogin());
             statement.setString(10,obj.getPassword());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement insert");
         }
     }
 

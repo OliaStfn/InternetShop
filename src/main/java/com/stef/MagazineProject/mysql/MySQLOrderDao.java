@@ -76,7 +76,7 @@ public class MySQLOrderDao extends AbstractDao<Order, Integer> {
                 order.setStatus(resultSet.getString("status.status"));
             }
         } catch (Exception e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with pars result set");
         }
         return orders;
     }
@@ -87,7 +87,7 @@ public class MySQLOrderDao extends AbstractDao<Order, Integer> {
             statement.setInt(1, obj.getId());
             statement.setString(2, obj.getStatus());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement update");
         }
     }
 
@@ -96,7 +96,7 @@ public class MySQLOrderDao extends AbstractDao<Order, Integer> {
         try {
             statement.setInt(1, obj.getClientId());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement insert");
         }
     }
 

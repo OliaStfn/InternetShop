@@ -132,6 +132,12 @@ public class Client extends Human implements Identifacator<Integer>, ISort {
         }
     }
 
+    public void showInformation() throws DaoException {
+        GenericDao dao = DaoCreator.createMySqlDao("favorite");
+        list= (FavouriteList) dao.read(id);
+        System.out.println(list.toString());
+    }
+
     @Override
     public String toString() {
         String tabulation = "\n________________________________________________";

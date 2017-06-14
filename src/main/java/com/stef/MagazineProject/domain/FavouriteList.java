@@ -101,6 +101,6 @@ public class FavouriteList implements Identifacator<Integer> {
             temp += line.toString();
         }
         return "FavouriteList: " +
-                "\n |\tItem: \t\t\t|\t" + temp;
+                "\n |\tGoods: \t\t\t|\t" + temp;
     }
 }

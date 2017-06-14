@@ -60,7 +60,7 @@ public class MySQLOrderLineDao extends AbstractDao<OrderLine,Integer> {
             statement.setInt(3, obj.getCount());
             statement.setDouble(4,obj.getPrice());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement insert");
         }
     }
 

@@ -25,6 +25,7 @@ public class Stock {
     }
 
     public static Goods findProduct() {
+        Goods item = null;
         try {
             GenericDao dao = DaoCreator.createMySqlDao("goods");
             goods = dao.readAll();
@@ -36,19 +37,18 @@ public class Stock {
             Scanner in = new Scanner(System.in);
             String inputName = in.nextLine();
 
-            for (int i=0;i<goods.size();i++) {
-                if (goods.get(i).getName().equalsIgnoreCase(inputName)) {
-                    return goods.get(i);
+            for (int i = 0; i < goods.size(); i++) {
+                if (goods.get(i).getName().toLowerCase().equalsIgnoreCase(inputName.toLowerCase())) {
+                    item = goods.get(i);
                 }
             }
         } catch (DaoException e) {
             log.info(e.getMessage());
-            return null;
         } catch (Exception e) {
             log.info(e.getMessage());
-            return null;
+        } finally {
+            return item;
         }
-        return null;
     }
 
 

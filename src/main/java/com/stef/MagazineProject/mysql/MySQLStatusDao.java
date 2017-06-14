@@ -67,7 +67,7 @@ public class MySQLStatusDao extends AbstractDao<Status,Integer>{
                 statuses.add(status);
             }
         } catch (Exception e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with pars result set");
         }
         return statuses;
     }
@@ -78,7 +78,7 @@ public class MySQLStatusDao extends AbstractDao<Status,Integer>{
             statement.setString(1, obj.getStatus());
             statement.setInt(2, obj.getId());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement update");
         }
     }
 
@@ -87,7 +87,7 @@ public class MySQLStatusDao extends AbstractDao<Status,Integer>{
         try {
             statement.setString(1, obj.getStatus());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e+"error with statement insert");
         }
     }
 
